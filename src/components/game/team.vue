@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <char :team="team" :char="0"></char>
+  <div :class="layout">
+    <char v-for="(char, index) in state[team].char" :team="team" :char="index" :key="index"></char>
   </div>
 </template>
 
@@ -19,6 +19,10 @@ export default {
   computed: {
     state: function() {
       return this.$store.getters['game/state']
+    },
+    layout: function() {
+      let meta = this.$store.getters['game/meta']
+      return this.team === meta.ally ? 'q-pr-sm' : 'q-pl-sm'
     }
   }
 }
