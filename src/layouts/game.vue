@@ -17,8 +17,8 @@
         </q-btn>
 
         <q-toolbar-title>
-          Quasar App
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+          Anime Rumble
+          <div slot="subtitle">Running on AR Alpha v2</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
@@ -66,8 +66,8 @@
 import { openURL } from 'quasar'
 
 export default {
-  name: 'LayoutDefault',
-  data () {
+  name: 'LayoutGame',
+  data() {
     return {
       // leftDrawerOpen: this.$q.platform.is.desktop
       leftDrawerOpen: false
@@ -80,4 +80,8 @@ export default {
 </script>
 
 <style>
+.glossy{
+  background: #222 !important;
+  background-image: none !important;
+}
 </style>
