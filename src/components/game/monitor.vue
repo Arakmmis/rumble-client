@@ -1,6 +1,7 @@
 <template>
   <div class="column text-center">    
-    <p @click="redeem">PRESS WHEN READY</p>
+    <p v-if="active" @click="redeem">PRESS WHEN READY</p>
+    <p v-if="!active">OPPONENT'S TURN</p>
     <p>TURN {{state.turn}}</p>
     <p>G{{energy.g}} R{{energy.r}} B{{energy.b}} W{{energy.w}} T{{energy.t}}</p>
     <redeem ref="redeem"></redeem>
@@ -23,22 +24,26 @@ export default {
     state: function() {
       return this.$store.getters['game/state']
     },
-     meta: function() {
+    meta: function() {
       return this.$store.getters['game/meta']
+    },
+    active: function() {
+      let turn = this.state.turn % 2 === 0 ? 'even' : 'odd'
+      return this.meta.ally === turn ? true : false
     },
     energy: function() {
       //Define from Getters
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
       let action = this.$store.getters['game/action']
-      //Define 
+      //Define
       let energy = state[meta.ally].energy
-      let total = energy.g + energy.r + energy.b + energy.w            
+      let total = energy.g + energy.r + energy.b + energy.w
       let skills = action.filter(x => x.turnid === state.turnid)
       let cost = {
         g: 0,
         r: 0,
-        b: 0,        
+        b: 0,
         w: 0,
         rd: 0
       }
@@ -49,7 +54,7 @@ export default {
 
         cost.g += skillCost.g
         cost.r += skillCost.r
-        cost.b += skillCost.b        
+        cost.b += skillCost.b
         cost.w += skillCost.w
         cost.rd += skillCost.rd
       }
@@ -58,14 +63,14 @@ export default {
       return {
         g: energy.g - cost.g,
         r: energy.r - cost.r,
-        b: energy.b - cost.b,        
+        b: energy.b - cost.b,
         w: energy.w - cost.w,
         t: total - costTotal
       }
     }
   },
   methods: {
-    redeem: function(){
+    redeem: function() {
       this.$refs.redeem.open()
     }
   }

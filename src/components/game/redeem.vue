@@ -5,6 +5,11 @@
     <p>R {{energy.r - redeem.r}} <button @click="plus('r')" :disabled="energy.r - redeem.r === 0 || redeem.rd === 0">+</button><button @click="minus('r')" :disabled="redeem.r === 0">-</button> {{redeem.r}}</p>
     <p>B {{energy.b - redeem.b}} <button @click="plus('b')" :disabled="energy.b - redeem.b === 0 || redeem.rd === 0">+</button><button @click="minus('b')" :disabled="redeem.b === 0">-</button> {{redeem.b}}</p>
     <p>W {{energy.w - redeem.w}} <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button><button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
+    <div>
+      <draggable v-model='action'>
+        <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)"/>
+      </draggable>
+    </div>
     <p @click="end">End Turn</p>
     <q-btn
       color="primary"
@@ -17,6 +22,7 @@
 <script>
 import io from 'socket.io-client'
 const socket = io('http://localhost:3000')
+import draggable from 'vuedraggable'
 
 export default {
   data() {
@@ -24,7 +30,19 @@ export default {
       opened: false
     }
   },
+  components: {
+    draggable
+  },
   computed: {
+    action: {
+      get() {
+        return this.$store.getters['game/action']
+      },
+      set(value) {
+        this.$store.commit('game/action', value)
+      }
+      // return this.$store.getters['game/action']
+    },
     redeem: function() {
       //Define from Getters
       let state = this.$store.getters['game/state']
@@ -88,6 +106,10 @@ export default {
     }
   },
   methods: {
+    image: function(team, char, skill) {
+      let state = this.$store.getters['game/state']
+      return state[team].char[char].skills[skill].picture
+    },
     plus: function(energy) {
       let redeem = this.$store.getters['game/redeem']
       redeem[energy] += 1

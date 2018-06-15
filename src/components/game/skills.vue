@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div v-for="(skill, index) in state[team].char[char].skills" :key="index">
+    <div v-for="(skill, index) in skills" :key="index">
       <!-- <p>{{skill.name}}</p> -->
       <img v-if="status(char,skill,team)" @click="queue({char, team, skill: index})" :src="skill.picture"/>
       <img v-if="!status(char,skill,team)" :src="skill.picture" class="disabled"/>
@@ -18,6 +18,9 @@ export default {
   computed: {
     state: function() {
       return this.$store.getters['game/state']
+    },
+    skills: function() {
+      return this.state[this.team].char[this.char].skills
     },
     energy: function() {
       return function(team) {
@@ -53,7 +56,7 @@ export default {
           r: energy.r - cost.r,
           b: energy.b - cost.b,
           w: energy.w - cost.w,
-          t: total - costTotal
+          total: total - costTotal
         }
       }
     }
