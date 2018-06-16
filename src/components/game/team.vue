@@ -22,7 +22,7 @@ export default {
     },
     layout: function() {
       let meta = this.$store.getters['game/meta']
-      return this.team === meta.ally ? 'q-pr-sm' : 'q-pl-sm'
+      return this.team === meta.ally ? '' : 'items-end'
     }
   }
 }

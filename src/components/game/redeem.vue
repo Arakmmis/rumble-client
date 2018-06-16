@@ -1,27 +1,31 @@
 <template>
-  <q-modal minimized v-model="opened" class="column text-center">    
+  <q-modal minimized v-model="opened" class="column text-center">
     <p>Choose {{redeem.rd}} Random Energies</p>
-    <p>G {{energy.g - redeem.g}} <button @click="plus('g')" :disabled="energy.g - redeem.g === 0 || redeem.rd === 0">+</button><button @click="minus('g')" :disabled="redeem.g === 0">-</button> {{redeem.g}}</p>
-    <p>R {{energy.r - redeem.r}} <button @click="plus('r')" :disabled="energy.r - redeem.r === 0 || redeem.rd === 0">+</button><button @click="minus('r')" :disabled="redeem.r === 0">-</button> {{redeem.r}}</p>
-    <p>B {{energy.b - redeem.b}} <button @click="plus('b')" :disabled="energy.b - redeem.b === 0 || redeem.rd === 0">+</button><button @click="minus('b')" :disabled="redeem.b === 0">-</button> {{redeem.b}}</p>
-    <p>W {{energy.w - redeem.w}} <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button><button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
+    <p>G {{energy.g - redeem.g}}
+      <button @click="plus('g')" :disabled="energy.g - redeem.g === 0 || redeem.rd === 0">+</button>
+      <button @click="minus('g')" :disabled="redeem.g === 0">-</button> {{redeem.g}}</p>
+    <p>R {{energy.r - redeem.r}}
+      <button @click="plus('r')" :disabled="energy.r - redeem.r === 0 || redeem.rd === 0">+</button>
+      <button @click="minus('r')" :disabled="redeem.r === 0">-</button> {{redeem.r}}</p>
+    <p>B {{energy.b - redeem.b}}
+      <button @click="plus('b')" :disabled="energy.b - redeem.b === 0 || redeem.rd === 0">+</button>
+      <button @click="minus('b')" :disabled="redeem.b === 0">-</button> {{redeem.b}}</p>
+    <p>W {{energy.w - redeem.w}}
+      <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button>
+      <button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
     <div>
       <draggable v-model='action'>
-        <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)"/>
+        <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" />
       </draggable>
     </div>
     <p @click="end">End Turn</p>
-    <q-btn
-      color="primary"
-      @click="opened = false"
-      label="Close"
-    />
+    <q-btn color="primary" @click="opened = false" label="Close" />
   </q-modal>
 </template>
 
 <script>
 import io from 'socket.io-client'
-const socket = io('http://localhost:3000')
+const socket = io('http://192.168.1.8:3000')
 import draggable from 'vuedraggable'
 
 export default {

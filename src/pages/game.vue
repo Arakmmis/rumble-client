@@ -1,21 +1,82 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center game--background">
     <div v-if="loaded">
       <monitor></monitor>
-      <div class="row">
+      <div class="row justify-center">
         <team :team="meta.ally"></team>
         <team :team="meta.enemy"></team>
-      </div>      
-    </div>    
+      </div>
+    </div>
   </q-page>
 </template>
 
-<style>
+<style lang="stylus">
+.game--background {
+  background: url('https://i.imgur.com/pj0h7aO.jpg') no-repeat center center;
+  fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding: 5px;
+}
+
+.energy__g {
+  display: inline-block;
+  background-color: rgb(0, 255, 42);
+  height: 10px;
+  width: 10px;
+  border: 0.5px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+.energy__r {
+  display: inline-block;
+  background-color: rgb(255, 0, 0);
+  height: 10px;
+  width: 10px;
+  border: 0.5px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+.energy__b {
+  display: inline-block;
+  background-color: rgb(0, 94, 255);
+  height: 10px;
+  width: 10px;
+  border: 0.5px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+.energy__w {
+  display: inline-block;
+  background-color: rgb(255, 255, 255);
+  height: 10px;
+  width: 10px;
+  border: 0.5px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 7px;
+    height: 7px;
+  }
+}
 </style>
 
 <script>
 import io from 'socket.io-client'
-const socket = io('http://localhost:3000')
+const socket = io('http://192.168.1.8:3000')
 import monitor from 'components/game/monitor'
 import team from 'components/game/team'
 let store, route
@@ -31,7 +92,7 @@ export default {
     route = this.$route
 
     //Make Connection
-    socket.emit('initiate', { player:  this.$route.query.player })    
+    socket.emit('initiate', { player: this.$route.query.player })
   },
   data() {
     return {}

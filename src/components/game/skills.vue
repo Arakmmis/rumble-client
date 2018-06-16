@@ -1,13 +1,60 @@
 <template>
-  <div class="row">
+  <div class="row skill__wrapper">
     <div v-for="(skill, index) in skills" :key="index" class="skill">
       <!-- <p>{{skill.name}}</p> -->
       <img v-if="status(char,skill,team)" @click="queue({char, team, skill: index})" :src="skill.picture" />
       <img v-if="!status(char,skill,team)" :src="skill.picture" class="disabled" />
       <p v-if="cooldownShow(skill, team)" class="cooldown flex flex-center">{{skill.counter}}</p>
+      <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf" v-if="$q.platform.is.mobile">
+        <p class="q-ma-none">Test</p>
+      </q-tooltip>
     </div>
   </div>
 </template>
+
+<style scoped lang="stylus">
+.disabled {
+  opacity: 0.6;
+}
+
+.skill__wrapper {
+  background: rgba(255, 255, 255, 1);
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid #222;
+
+  @media screen and (max-width: 800px) {
+    padding: 2px;
+  }
+}
+
+.skill {
+  background: #fff;
+  position: relative;
+  width: 65px;
+  height: 65px;
+  margin: 0 5px;
+  border: 1px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.skill img {
+  width: 100%;
+  height: 100%;
+}
+
+.cooldown {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+}
+</style>
 
 <script>
 export default {
@@ -22,6 +69,20 @@ export default {
     },
     skills: function() {
       return this.state[this.team].char[this.char].skills
+    },
+    layout: function() {
+      let meta = this.$store.getters['game/meta']
+      let layoutLeft = {
+        wrapper: 'row q-pl-sm status--wrapper',
+        tooltipAnchor: 'bottom left',
+        tooltipSelf: 'top left'
+      }
+      let layoutRight = {
+        wrapper: 'row reverse q-pr-sm status--wrapper',
+        tooltipAnchor: 'bottom right',
+        tooltipSelf: 'top right'
+      }
+      return this.team === meta.ally ? layoutLeft : layoutRight
     },
     energy: function() {
       return function(team) {
@@ -119,25 +180,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.disabled {
-  opacity: 0.6;
-}
-.skill {
-  position: relative;
-  width: 65px;
-  height: 65px;
-}
-.skill img {
-  width: 100%;
-  height: 100%;
-}
-.cooldown {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 40px;
-}
-</style>

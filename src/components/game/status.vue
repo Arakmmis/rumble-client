@@ -1,8 +1,8 @@
 <template>
-  <div :class="layout">
+  <div :class="layout.wrapper">
     <div class="status" v-for="(item, index) of queue(char, team)" :key="'queue'+index">
       <img :src="item.picture" />
-      <q-tooltip anchor="bottom left" self="top left">
+      <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf">
         <p class="tooltip">
           {{item.char}}'s {{item.skill}}
         </p>
@@ -10,7 +10,7 @@
     </div>
     <div class="status" v-for="(item, index) of status" :key="'stauts'+index">
       <img :src="item.picture" />
-      <q-tooltip anchor="bottom left" self="top left">
+      <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf">
         <p v-for="(desc, index) of descriptions(item.parent, item.caster.id, item.caster.team)" :key="index" class="tooltip">
           {{desc}}
         </p>
@@ -18,6 +18,45 @@
     </div>
   </div>
 </template>
+
+<style scoped lang="stylus">
+.status--wrapper {
+  height: 20px;
+  margin-bottom: 2px;
+
+  @media screen and (max-width: 800px) {
+    height: 15px;
+  }
+}
+
+.status {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #222;
+
+  @media screen and (max-width: 415px) {
+    border: 0px solid #222;
+  }
+
+  @media screen and (max-width: 800px) {
+    border: 0px solid #222;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.status img {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.tooltip {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+</style>
 
 <script>
 import _ from 'lodash'
@@ -48,9 +87,17 @@ export default {
     },
     layout: function() {
       let meta = this.$store.getters['game/meta']
-      return this.team === meta.ally
-        ? 'row q-pl-sm status--wrapper'
-        : 'row reverse q-pr-sm status--wrapper'
+      let layoutLeft = {
+        wrapper: 'row q-pl-sm status--wrapper',
+        tooltipAnchor: 'bottom left',
+        tooltipSelf: 'top left'
+      }
+      let layoutRight = {
+        wrapper: 'row reverse q-pr-sm status--wrapper',
+        tooltipAnchor: 'bottom right',
+        tooltipSelf: 'top right'
+      }
+      return this.team === meta.ally ? layoutLeft : layoutRight
     }
   },
   methods: {
@@ -82,10 +129,8 @@ export default {
       )
       allStatus = allStatus.filter(
         x =>
-          x.parent === parent &&
-          x.caster.id === char &&
-          x.caster.team === team
-      )      
+          x.parent === parent && x.caster.id === char && x.caster.team === team
+      )
       let description = allStatus.map(x => {
         let type = x.type
         switch (type) {
@@ -113,27 +158,9 @@ export default {
           default:
             return
         }
-      })      
+      })
       return description
     }
   }
 }
 </script>
-
-<style scoped>
-.status--wrapper {
-  height: 20px;
-}
-.status {
-  width: 20px;
-  height: 20px;
-}
-.status img {
-  width: 100%;
-  height: 100%;
-}
-.tooltip {
-  font-size: 14px;
-  margin-bottom: 0px;
-}
-</style>
