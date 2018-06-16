@@ -1,26 +1,33 @@
 <template>
   <div :class="layout">
-    <div class="column">      
+    <div class="column">
       <img v-if="status(char, team)" @click="target({char, team})" :src="state[team].char[char].picture" />
-      <img v-if="!status(char, team)" :src="state[team].char[char].picture" class="disabled"/>
+      <img v-if="!status(char, team)" :src="state[team].char[char].picture" class="disabled" />
       <p>{{details.hp}}</p>
     </div>
-    <div v-if="active('visible',char,team)">      
-      <img @dblclick="remove(char,team)" v-if="active('icon',char,team)" :src="active('img',char,team)"/>
-      <img v-if="!active('icon',char,team)" src="https://i.imgur.com/EB6t4nN.jpg"/>
+    <div class="column">
+      <status :team="team" :char="char" />
+      <div class="row">
+        <div v-if="queue('visible',char,team)" class="queue">
+          <img @dblclick="remove(char,team)" v-if="queue('icon',char,team)" :src="queue('img',char,team)" />
+          <img v-if="!queue('icon',char,team)" src="https://i.imgur.com/EB6t4nN.jpg" />
+        </div>
+        <skills :char="char" :team="team"></skills>
+      </div>
     </div>
-    <skills :char="char" :team="team"></skills>
   </div>
 </template>
 
 <script>
 import skills from './skills'
+import status from './status'
 
 export default {
   name: 'GameChar',
   props: ['team', 'char'],
   components: {
-    skills
+    skills,
+    status
   },
   data() {
     return {}
@@ -38,7 +45,7 @@ export default {
     }
   },
   methods: {
-    active: function(type, char, team) {
+    queue: function(type, char, team) {
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
       let action = this.$store.getters['game/action']
@@ -124,5 +131,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.queue {
+  width: 65px;
+  height: 65px;
+}
+.queue img {
+  width: 100%;
+  height: 100%;
+}
 </style>

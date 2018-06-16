@@ -1,10 +1,11 @@
 <template>
   <div class="row">
-    <div v-for="(skill, index) in skills" :key="index">
+    <div v-for="(skill, index) in skills" :key="index" class="skill">
       <!-- <p>{{skill.name}}</p> -->
-      <img v-if="status(char,skill,team)" @click="queue({char, team, skill: index})" :src="skill.picture"/>
-      <img v-if="!status(char,skill,team)" :src="skill.picture" class="disabled"/>
-    </div>  
+      <img v-if="status(char,skill,team)" @click="queue({char, team, skill: index})" :src="skill.picture" />
+      <img v-if="!status(char,skill,team)" :src="skill.picture" class="disabled" />
+      <p v-if="cooldownShow(skill, team)" class="cooldown flex flex-center">{{skill.counter}}</p>
+    </div>
   </div>
 </template>
 
@@ -87,7 +88,7 @@ export default {
           x.turnid === state.turnid
       )
       //Basic Condition
-      if (turn !== team || team !== meta.ally || inQueue) {
+      if (turn !== team || team !== meta.ally || inQueue || skill.isCooldown) {
         return false
       }
       //Advance Condition
@@ -107,13 +108,36 @@ export default {
         return false
       }
       return true
+    },
+    cooldownShow: function(skill, team) {
+      let meta = this.$store.getters['game/meta']
+      if (meta.ally === team && skill.isCooldown) {
+        return true
+      }
+      return false
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .disabled {
   opacity: 0.6;
+}
+.skill {
+  position: relative;
+  width: 65px;
+  height: 65px;
+}
+.skill img {
+  width: 100%;
+  height: 100%;
+}
+.cooldown {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
 }
 </style>
