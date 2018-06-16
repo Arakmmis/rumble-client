@@ -11,7 +11,7 @@
     <div class="status" v-for="(item, index) of status" :key="'stauts'+index">
       <img :src="item.picture" />
       <q-tooltip anchor="bottom left" self="top left">
-        <p v-for="(desc, index) of descriptions(item.parent)" :key="index" class="tooltip">
+        <p v-for="(desc, index) of descriptions(item.parent, item.caster.id, item.caster.team)" :key="index" class="tooltip">
           {{desc}}
         </p>
       </q-tooltip>
@@ -72,7 +72,7 @@ export default {
         }
       })
     },
-    descriptions: function(parent) {
+    descriptions: function(parent, char, team) {
       let status = this.state[this.team].char[this.char].status
       let allStatus = _.concat(
         status.onAttack,
@@ -83,9 +83,9 @@ export default {
       allStatus = allStatus.filter(
         x =>
           x.parent === parent &&
-          x.caster.id === this.char &&
-          x.caster.team === this.team
-      )
+          x.caster.id === char &&
+          x.caster.team === team
+      )      
       let description = allStatus.map(x => {
         let type = x.type
         switch (type) {
@@ -99,7 +99,7 @@ export default {
             return 'Stunned'
             break
           case 'damage':
-            return 'Damage'
+            return 'Damage for ' + x.duration + ' turns'
             break
           case 'invul':
             return 'Invulnerable'
@@ -107,10 +107,13 @@ export default {
           case 'buff':
             return 'Damage Increase'
             break
+          case 'state':
+            return 'State for ' + x.duration + ' turns'
+            break
           default:
             return
         }
-      })
+      })      
       return description
     }
   }
