@@ -49,14 +49,16 @@
   @media screen and (max-width: 800px) {
     width: 200px;
     padding: 2px;
-  }  
+  }
+
   @media screen and (max-width: 375px) {
     width: 120px;
     font-size: 12px !important;
   }
 }
-.game__monitor--ready p{
-  @media screen and (max-width: 375px) {    
+
+.game__monitor--ready p {
+  @media screen and (max-width: 375px) {
     font-size: 10px !important;
   }
 }
@@ -67,16 +69,19 @@
   padding: 5px 20px;
   border-radius: 5px;
   margin-bottom: 5px;
+
   @media screen and (max-width: 800px) {
-    width: 200px;    
+    width: 200px;
   }
+
   @media screen and (max-width: 375px) {
     width: 120px;
-  } 
+  }
 }
 
 .game__monitor--energy p:first-child {
   margin-bottom: 5px;
+
   @media screen and (max-width: 800px) {
     font-size: 8px;
     margin-bottom: 1px;
@@ -85,6 +90,7 @@
 
 .game__monitor--energy p:last-child {
   font-size: 12px !important;
+
   @media screen and (max-width: 800px) {
     font-size: 6px !important;
   }
@@ -96,10 +102,12 @@
   padding: 2px 10px;
   margin: 0 5px;
   border-radius: 2px;
+
   @media screen and (max-width: 800px) {
     font-size: 8px;
   }
-  @media screen and (max-width: 375px) {    
+
+  @media screen and (max-width: 375px) {
     padding: 2px 2px;
     margin: 0 0px;
   }
@@ -112,6 +120,7 @@
   padding: 2px 5px;
   margin: 0 5px;
   border-radius: 2px;
+
   @media screen and (max-width: 800px) {
     font-size: 8px;
   }
@@ -124,7 +133,7 @@ import redeem from './redeem'
 import profile from './profile'
 
 export default {
-  name: 'Monitor',
+  name: 'GameMonitor',
   components: {
     redeem,
     profile

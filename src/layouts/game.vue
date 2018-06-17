@@ -1,37 +1,9 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <!-- <q-layout-header>
-      <q-toolbar
-        color="primary"
-        :glossy="$q.theme === 'mat'"
-        :inverted="$q.theme === 'ios'"
-      >
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
-        >
-          <q-icon name="menu" />
-        </q-btn>
+  <q-layout view="hHh Lpr lFf">
+    <chatbox />
 
-        <q-toolbar-title>
-          Anime Rumble
-          <div slot="subtitle">Running on AR Alpha v2</div>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-layout-header> -->
-
-    <q-layout-drawer
-      v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
-    >
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
+    <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
+      <q-list no-border link inset-delimiter>
         <q-list-header>Essential Links</q-list-header>
         <q-item @click.native="openURL('http://quasar-framework.org')">
           <q-item-side icon="school" />
@@ -64,9 +36,13 @@
 
 <script>
 import { openURL } from 'quasar'
+import chatbox from 'components/chatbox'
 
 export default {
   name: 'LayoutGame',
+  components: {
+    chatbox
+  },
   data() {
     return {
       // leftDrawerOpen: this.$q.platform.is.desktop
@@ -80,7 +56,7 @@ export default {
 </script>
 
 <style>
-.glossy{
+.glossy {
   background: #222 !important;
   background-image: none !important;
 }

@@ -29,6 +29,7 @@ const socket = io('http://192.168.1.8:3000')
 import draggable from 'vuedraggable'
 
 export default {
+  name: 'GameRedeem',
   data() {
     return {
       opened: false
