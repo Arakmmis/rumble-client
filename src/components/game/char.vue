@@ -216,7 +216,8 @@ export default {
         pkg: {
           char,
           team,
-          skill: action[inQueue].skill
+          skill: action[inQueue].skill,
+          turnid: state.turnid
         }
       }
       this.$store.commit('game/queue', payload)

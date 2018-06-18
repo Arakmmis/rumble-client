@@ -55,7 +55,8 @@ export const queue = (state, payload) => {
         !(
           x.caster.id === pkg.char &&
           x.caster.team === pkg.team &&
-          x.skill === pkg.skill
+          x.skill === pkg.skill &&
+          x.turnid === pkg.turnid
         )
     )
   }
