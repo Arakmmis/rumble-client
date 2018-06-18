@@ -149,16 +149,16 @@ export default {
           x.turnid === state.turnid
       )
       //Basic Condition
-      if (turn !== team || team !== meta.ally || inQueue || skill.isCooldown) {
+      if (turn !== team || team !== meta.ally || inQueue || !skill.active) {
         return false
       }
       //Advance Condition
-      if (details.status.onState.some(x => x.type === 'stun')) {
-        return false
-      }
-      if (!skill.isAllowed) {
-        return false
-      }
+      // if (details.status.onState.some(x => x.type === 'stun')) {
+      //   return false
+      // }
+      // if (!skill.isAllowed) {
+      //   return false
+      // }
       if (
         cost.g > energy.g ||
         cost.r > energy.r ||
