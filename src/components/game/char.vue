@@ -31,6 +31,7 @@
 
 .char {
   padding: 0px 5px;
+
   @media screen and (max-width: 800px) {
     padding: 0px 2px;
   }
@@ -61,6 +62,7 @@
   border: 1px solid #222;
   text-align: center;
   padding: 2px 5px;
+
   @media screen and (max-width: 800px) {
     padding: 2px;
   }
@@ -69,6 +71,7 @@
 .char__hp p {
   margin: 0;
   font-size: 12px;
+
   @media screen and (max-width: 800px) {
     font-size: 8px;
   }
@@ -76,6 +79,7 @@
 
 .queue {
   padding: 5px;
+
   @media screen and (max-width: 800px) {
     padding: 2px;
   }
@@ -167,6 +171,12 @@ export default {
         let target = skill.target
         switch (target) {
           case 'enemy':
+            if (details.status.onState.some(x => x.type === 'invul')) {
+              return false
+            }
+            return team === meta.enemy ? true : false
+            break
+          case 'all enemies':
             if (details.status.onState.some(x => x.type === 'invul')) {
               return false
             }

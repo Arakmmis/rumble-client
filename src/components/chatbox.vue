@@ -14,7 +14,9 @@
 <script>
 export default {
   name: 'Chatbox',
-  data() {},
+  data() {
+    return {}
+  },
   methods: {}
 }
 </script>

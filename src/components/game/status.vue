@@ -103,12 +103,29 @@ export default {
   methods: {
     queue: function(char, team) {
       let action = this.$store.getters['game/action']
-      let queue = action.filter(
-        x =>
+      let self = this
+      let invul = self.state[team].char[char].status.onState.some(
+        x => x.type === 'invul'
+      )
+      let queue = action.filter(x => {
+        let targeting =
+          self.state[x.caster.team].char[x.caster.id].skills[x.skill].target
+        if (
           x.target.id === char &&
           x.target.team === team &&
           x.turnid === this.state.turnid
-      )
+        ) {
+          return true
+        } else if (
+          targeting === 'all enemies' &&
+          x.target.team === team &&
+          invul === false &&
+          x.turnid === this.state.turnid
+        ) {
+          return true
+        }
+        return false
+      })
       return queue.map(x => {
         return {
           picture: this.state[x.caster.team].char[x.caster.id].skills[x.skill]
