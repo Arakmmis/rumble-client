@@ -1,27 +1,51 @@
 <template>
   <q-modal minimized v-model="opened" class="column text-center">
-    <p>Choose {{redeem.rd}} Random Energies</p>
-    <p>G {{energy.g - redeem.g}}
-      <button @click="plus('g')" :disabled="energy.g - redeem.g === 0 || redeem.rd === 0">+</button>
-      <button @click="minus('g')" :disabled="redeem.g === 0">-</button> {{redeem.g}}</p>
-    <p>R {{energy.r - redeem.r}}
-      <button @click="plus('r')" :disabled="energy.r - redeem.r === 0 || redeem.rd === 0">+</button>
-      <button @click="minus('r')" :disabled="redeem.r === 0">-</button> {{redeem.r}}</p>
-    <p>B {{energy.b - redeem.b}}
-      <button @click="plus('b')" :disabled="energy.b - redeem.b === 0 || redeem.rd === 0">+</button>
-      <button @click="minus('b')" :disabled="redeem.b === 0">-</button> {{redeem.b}}</p>
-    <p>W {{energy.w - redeem.w}}
-      <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button>
-      <button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
-    <div>
-      <draggable v-model='action'>
-        <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" />
-      </draggable>
+    <div class="redeem">
+      <p>Choose <b>{{redeem.rd}}</b> Random Energies</p>
+      <p>
+        <span class="energy__g"></span> {{energy.g - redeem.g}}
+        <button @click="plus('g')" :disabled="energy.g - redeem.g === 0 || redeem.rd === 0">+</button>
+        <button @click="minus('g')" :disabled="redeem.g === 0">-</button> {{redeem.g}}</p>
+      <p>
+        <span class="energy__r"></span> {{energy.r - redeem.r}}
+        <button @click="plus('r')" :disabled="energy.r - redeem.r === 0 || redeem.rd === 0">+</button>
+        <button @click="minus('r')" :disabled="redeem.r === 0">-</button> {{redeem.r}}</p>
+      <p>
+        <span class="energy__b"></span> {{energy.b - redeem.b}}
+        <button @click="plus('b')" :disabled="energy.b - redeem.b === 0 || redeem.rd === 0">+</button>
+        <button @click="minus('b')" :disabled="redeem.b === 0">-</button> {{redeem.b}}</p>
+      <p>
+        <span class="energy__w"></span> {{energy.w - redeem.w}}
+        <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button>
+        <button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
+      <div class="queue q-mb-sm">
+        <draggable v-model='action'>
+          <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" class="queue__img"/>
+        </draggable>
+      </div>      
+      <div class="row justify-around">
+      <q-btn color="primary" @click="end" label="End Turn"/>
+      <q-btn color="secondary" @click="opened = false" label="Cancel" />
+      </div>
     </div>
-    <p @click="end">End Turn</p>
-    <q-btn color="primary" @click="opened = false" label="Close" />
   </q-modal>
 </template>
+
+<style scope lang="stylus">
+.redeem {
+  padding: 10px;
+}
+
+.redeem p {
+  font-size: 14px;
+}
+
+.queue__img{
+  padding: 5px;
+  height: 50px;
+  width: 50px;
+}
+</style>
 
 <script>
 import io from 'socket.io-client'

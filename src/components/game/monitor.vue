@@ -16,7 +16,7 @@
         </p>
         <p>TURN {{state.turn}} - LADDER</p>
       </div>
-      <div class="row game__monitor--exchange">
+      <div class="row game__monitor--exchange" v-if="false">
         <p>ENERGY EXCHANGE</p>
         <p>UNDO</p>
       </div>

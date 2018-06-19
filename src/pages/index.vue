@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center home--background">
     <div class="column items-center">
-      <img alt="Quasar logo" src="https://i.imgur.com/QB06Zdr.png" class="logo">
+      <img alt="Quasar logo" src="https://i.imgur.com/5SdKVB8.png" class="logo">
       <img @click="enter" :src="isHover === false ? button : buttonHover" @mouseover="isHover = !isHover" @mouseout="isHover = !isHover" class="enter">
     </div>
     <search ref='search' />
@@ -45,8 +45,8 @@ export default {
   },
   data: function() {
     return {
-      button: 'https://i.imgur.com/TD1W01X.png',
-      buttonHover: 'https://i.imgur.com/mBosSxP.png',
+      button: 'https://i.imgur.com/65DXg5y.png',
+      buttonHover: 'https://i.imgur.com/m7I8pgH.png',
       isHover: false
     }
   },
