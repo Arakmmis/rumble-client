@@ -142,7 +142,8 @@ export default {
       }
       let payload = {
         action: this.$store.getters['game/action'],
-        redeem: this.$store.getters['game/redeem']
+        redeem: this.$store.getters['game/redeem'],
+        room: this.$route.params.room
       }
       socket.emit('battle', payload)
       this.opened = false

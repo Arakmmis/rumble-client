@@ -1,9 +1,10 @@
 <template>
   <q-page class="flex flex-center home--background">
     <div class="column items-center">
-      <img alt="Quasar logo" src="https://i.imgur.com/QB06Zdr.png" width="500px;">
-      <img @click="enter" :src="isHover === false ? button : buttonHover" @mouseover="isHover = !isHover" @mouseout="isHover = !isHover" width="200px">
+      <img alt="Quasar logo" src="https://i.imgur.com/QB06Zdr.png" class="logo">
+      <img @click="enter" :src="isHover === false ? button : buttonHover" @mouseover="isHover = !isHover" @mouseout="isHover = !isHover" class="enter">
     </div>
+    <search ref='search' />
   </q-page>
 </template>
 
@@ -16,11 +17,32 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+.logo {
+  width: 500px;
+
+  @media screen and (max-width: 800px) {
+    width: 300px;
+  }
+}
+
+.enter {
+  width: 200px;
+
+  @media screen and (max-width: 800px) {
+    width: 150px;
+  }
+}
 </style>
 
 <script>
+import search from 'components/main/search'
+
 export default {
   name: 'PageIndex',
+  components: {
+    search
+  },
   data: function() {
     return {
       button: 'https://i.imgur.com/TD1W01X.png',
@@ -30,7 +52,7 @@ export default {
   },
   methods: {
     enter: function() {
-      // $router.push('/admin/builder')
+      this.$refs.search.open()
     }
   }
 }

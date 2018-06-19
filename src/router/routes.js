@@ -6,7 +6,7 @@ export default [
   },
 
   {
-    path: '/game/:id',
+    path: '/game/:room',
     component: () => import('layouts/game'),
     children: [{ path: '', component: () => import('pages/game') }]
   },

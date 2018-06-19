@@ -92,7 +92,7 @@ export default {
     route = this.$route
 
     //Make Connection
-    socket.emit('initiate', { player: this.$route.query.player })
+    socket.emit('initiate', { player: this.$route.query.player, room: this.$route.params.room })
   },
   data() {
     return {}

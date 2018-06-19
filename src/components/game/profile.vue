@@ -1,8 +1,8 @@
 <template>
   <div :class="layout.wrapper">
     <div :class="layout.details">
-      <p class="l--big">Leciel</p>
-      <p class="l--small">W/L/S - 10/2/5</p>
+      <p class="l--big">{{player}}</p>
+      <!-- <p class="l--small">W/L/S - 10/2/5</p> -->
     </div>
     <div class="game__profile--img">
       <img src="https://i.imgur.com/JUq1q2f.jpg">
@@ -33,6 +33,9 @@ export default {
         details: 'column items-start game__profile--details'
       }
       return this.team === meta.ally ? layoutLeft : layoutRight
+    },
+    player: function(){
+      return this.state[this.team].name
     }
   }
 }
