@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header>
+    <!-- <q-layout-header>
       <q-toolbar
         color="primary"
         :glossy="$q.theme === 'mat'"
@@ -54,7 +54,7 @@
           <q-item-main label="Twitter" sublabel="@quasarframework" />
         </q-item>
       </q-list>
-    </q-layout-drawer>
+    </q-layout-drawer> -->
 
     <q-page-container>
       <router-view />

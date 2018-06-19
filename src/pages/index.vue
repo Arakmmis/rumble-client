@@ -1,14 +1,37 @@
 <template>
-  <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
+  <q-page class="flex flex-center home--background">
+    <div class="column items-center">
+      <img alt="Quasar logo" src="https://i.imgur.com/QB06Zdr.png" width="500px;">
+      <img @click="enter" :src="isHover === false ? button : buttonHover" @mouseover="isHover = !isHover" @mouseout="isHover = !isHover" width="200px">
+    </div>
   </q-page>
 </template>
 
-<style>
+<style scoped lang="stylus">
+.home--background {
+  background: url('https://i.imgur.com/rPu37ND.jpg') no-repeat center center;
+  fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 </style>
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  data: function() {
+    return {
+      button: 'https://i.imgur.com/TD1W01X.png',
+      buttonHover: 'https://i.imgur.com/mBosSxP.png',
+      isHover: false
+    }
+  },
+  methods: {
+    enter: function() {
+      // $router.push('/admin/builder')
+    }
+  }
 }
 </script>

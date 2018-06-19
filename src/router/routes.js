@@ -13,7 +13,7 @@ export default [
 
   {
     path: '/profile',
-    component: () => import('layouts/profile'),
+    component: () => import('layouts/main'),
     children: [{ path: '', component: () => import('pages/profile') }]
   },
 
