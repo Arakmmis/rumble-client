@@ -1,7 +1,8 @@
 <template>
   <q-modal minimized v-model="opened" class="column text-center">
     <div class="redeem">
-      <p>Choose <b>{{redeem.rd}}</b> Random Energies</p>
+      <p>Choose
+        <b>{{redeem.rd}}</b> Random Energies</p>
       <p>
         <span class="energy__g"></span> {{energy.g - redeem.g}}
         <button @click="plus('g')" :disabled="energy.g - redeem.g === 0 || redeem.rd === 0">+</button>
@@ -18,20 +19,20 @@
         <span class="energy__w"></span> {{energy.w - redeem.w}}
         <button @click="plus('w')" :disabled="energy.w - redeem.w === 0 || redeem.rd === 0">+</button>
         <button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
-      <div class="queue q-mb-sm">
+      <div class="q-mb-sm">
         <draggable v-model='action'>
-          <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" class="queue__img"/>
+          <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" class="redeem__img" />
         </draggable>
-      </div>      
+      </div>
       <div class="row justify-around">
-      <q-btn color="primary" @click="end" label="End Turn"/>
-      <q-btn color="secondary" @click="opened = false" label="Cancel" />
+        <q-btn color="primary" @click="end" label="End Turn" />
+        <q-btn color="secondary" @click="opened = false" label="Cancel" />
       </div>
     </div>
   </q-modal>
 </template>
 
-<style scope lang="stylus">
+<style lang="stylus">
 .redeem {
   padding: 10px;
 }
@@ -40,7 +41,7 @@
   font-size: 14px;
 }
 
-.queue__img{
+.redeem__img {
   padding: 5px;
   height: 50px;
   width: 50px;
@@ -49,8 +50,8 @@
 
 <script>
 import io from 'socket.io-client'
-// const socket = io('http://192.168.1.8:3000')
-const socket = io('http://35.231.223.180:3000')
+const socket = io('http://192.168.1.8:3000')
+// const socket = io('http://35.231.223.180:3000')
 import draggable from 'vuedraggable'
 
 export default {

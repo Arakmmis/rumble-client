@@ -76,8 +76,8 @@
 
 <script>
 import io from 'socket.io-client'
-// const socket = io('http://192.168.1.8:3000')
-const socket = io('http://35.231.223.180:3000')
+const socket = io('http://192.168.1.8:3000')
+// const socket = io('http://35.231.223.180:3000')
 import monitor from 'components/game/monitor'
 import team from 'components/game/team'
 let store, route
