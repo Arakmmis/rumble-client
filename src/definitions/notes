@@ -1,0 +1,35 @@
+check
+
+1) skill name: X
+    aspect of it: cooldown, 
+    what about it?: 
+    value: 10
+
+    if effect(type) charge(subject) self(component) is above(evaluator) 10(comparitor), return 10(value)
+    if char(type) self(subject) hp(component) is above(evaluator) 10(comparitor), return 20(value)
+    if enemy skill charge
+
+owner: environment, caster, target, list skills
+subject: 
+    if char: hp, stun, invul, skill
+    if skill: cooldown, charge, duration, stack, state,
+evaluator: 
+
+------/
+
+check target if X state exist. If exist, use X damage
+check self if X skill charge is over 5. If over 5, use X damage
+check self if state exist. if exist use X damage
+check target if stunned. if stunned use X damage.
+check self if hp is over 10. if over 10, use X damage.
+check skill if still on cooldown. if on cooldown, use X
+check self is effect duration is below 1. if below 1 use X.
+
+subject object verb
+
+subject: target, self, skill
+object: state, charge, effect, hp
+evaluator: exist, <=, >=
+comparitor: 10,20,30
+value: true, false, number
+    

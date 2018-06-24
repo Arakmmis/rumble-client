@@ -62,7 +62,15 @@ module.exports = function(ctx) {
         'QCardMedia',
         'QCardSeparator',
         'QCardActions',
-        'QInput'
+        'QInput',
+        'QCheckbox',
+        'QField',
+        'QSelect',
+        'QTabs',
+        'QTab',
+        'QTabPane',
+        'QRouteTab',
+        'QPageSticky'
       ],
       directives: ['Ripple'],
       // Quasar plugins

@@ -169,18 +169,39 @@ export default {
         let skill =
           state[buffer.caster.team].char[buffer.caster.id].skills[buffer.skill]
         let target = skill.target
+
+        //Check Marking
+        if (
+          details.status.onState.some(
+            x =>
+              x.type === 'mark' &&
+              x.parent === buffer.skill &&
+              x.caster.id === buffer.caster.id &&
+              x.caster.team === buffer.caster.team
+          )
+        ) {
+          return false
+        }
+
         switch (target) {
           case 'enemy':
             if (details.status.onState.some(x => x.type === 'invul')) {
-              return false
+              if (!details.status.onState.some(x => x.type === 'disable')) {
+                return false
+              }
             }
             return team === meta.enemy ? true : false
             break
           case 'all enemies':
             if (details.status.onState.some(x => x.type === 'invul')) {
-              return false
+              if (!details.status.onState.some(x => x.type === 'disable')) {
+                return false
+              }
             }
             return team === meta.enemy ? true : false
+            break
+          case 'ally':
+            return team === meta.ally ? true : false
             break
           case 'self':
             return team === meta.ally && buffer.caster.id === char

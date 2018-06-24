@@ -152,25 +152,31 @@ export default {
         let type = x.type
         switch (type) {
           case 'allow':
-            return 'Allow'
+            return 'Allow for ' + x.duration + ' turns'
             break
           case 'dr':
-            return 'Damage Reduction'
+            return 'Damage Reduction for ' + x.duration + ' turns'
             break
           case 'stun':
-            return 'Stunned'
+            return 'Stunned for ' + x.duration + ' turns'
             break
           case 'damage':
             return 'Damage for ' + x.duration + ' turns'
             break
           case 'invul':
-            return 'Invulnerable'
+            return 'Invulnerable for ' + x.duration + ' turns'
             break
           case 'buff':
-            return 'Damage Increase'
+            return 'Damage Increase for ' + x.duration + ' turns'
+            break
+          case 'ignore':
+            return 'Ignore for ' + x.duration + ' turns'
             break
           case 'state':
             return 'State for ' + x.duration + ' turns'
+            break
+          case 'disable':
+            return 'Disable for ' + x.duration + ' turns'
             break
           default:
             return

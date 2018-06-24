@@ -76,8 +76,8 @@
 
 <script>
 import io from 'socket.io-client'
-// const socket = io('http://192.168.1.8:3000')
-const socket = io('http://35.231.223.180:3000')
+const socket = io('http://localhost:3000')
+// const socket = io('http://35.231.223.180:3000')
 import monitor from 'components/game/monitor'
 import team from 'components/game/team'
 let store, route
@@ -93,7 +93,10 @@ export default {
     route = this.$route
 
     //Make Connection
-    socket.emit('initiate', { player: this.$route.query.player, room: this.$route.params.room })
+    socket.emit('initiate', {
+      player: this.$route.query.player,
+      room: this.$route.params.room
+    })
   },
   data() {
     return {}

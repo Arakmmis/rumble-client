@@ -18,6 +18,15 @@ export default [
   },
 
   {
+    path: '/admin',
+    component: () => import('layouts/dashboard'),
+    children: [
+      { path: '', component: () => import('pages/home') },
+      { path: 'builder', component: () => import('pages/builder') }
+    ]
+  },
+
+  {
     // Always leave this as last one
     path: '*',
     component: () => import('pages/404')
