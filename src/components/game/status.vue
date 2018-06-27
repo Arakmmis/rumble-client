@@ -73,7 +73,7 @@ export default {
       return this.$store.getters['game/state']
     },
     status: function() {
-      let status = this.state[this.team].char[this.char].status
+      let status = this.state[this.team].chars[this.char].status
       let allStatus = _.concat(
         status.onAttack,
         status.onReceive,
@@ -104,12 +104,12 @@ export default {
     queue: function(char, team) {
       let action = this.$store.getters['game/action']
       let self = this
-      let invul = self.state[team].char[char].status.onState.some(
+      let invul = self.state[team].chars[char].status.onState.some(
         x => x.type === 'invul'
       )
       let queue = action.filter(x => {
         let targeting =
-          self.state[x.caster.team].char[x.caster.id].skills[x.skill].target
+          self.state[x.caster.team].chars[x.caster.id].skills[x.skill].target
         if (
           x.target.id === char &&
           x.target.team === team &&
@@ -127,17 +127,16 @@ export default {
         return false
       })
       return queue.map(x => {
+        let char = this.state[x.caster.team].chars[x.caster.id]
         return {
-          picture: this.state[x.caster.team].char[x.caster.id].skills[x.skill]
-            .picture,
-          skill: this.state[x.caster.team].char[x.caster.id].skills[x.skill]
-            .name,
-          char: this.state[x.caster.team].char[x.caster.id].name
+          picture: char.skills[x.skill].picture,
+          skill: char.skills[x.skill].name,
+          char: char.chars[x.caster.id].name
         }
       })
     },
     descriptions: function(parent, char, team) {
-      let status = this.state[this.team].char[this.char].status
+      let status = this.state[this.team].chars[this.char].status
       let allStatus = _.concat(
         status.onAttack,
         status.onReceive,

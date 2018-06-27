@@ -68,7 +68,7 @@ export default {
       return this.$store.getters['game/state']
     },
     skills: function() {
-      return this.state[this.team].char[this.char].skills
+      return this.state[this.team].chars[this.char].skills
     },
     layout: function() {
       let meta = this.$store.getters['game/meta']
@@ -102,7 +102,7 @@ export default {
         }
         //Logic
         for (let skill of skills) {
-          let char = state[skill.caster.team].char[skill.caster.id]
+          let char = state[skill.caster.team].chars[skill.caster.id]
           let skillCost = char.skills[skill.skill].cost
 
           cost.g += skillCost.g
@@ -137,7 +137,7 @@ export default {
       let meta = this.$store.getters['game/meta']
       let action = this.$store.getters['game/action']
       //Define
-      let details = state[team].char[char]
+      let details = state[team].chars[char]
       let energy = this.energy(team)
       let cost = skill.cost
       let costTotal = cost.g + cost.r + cost.b + cost.w + cost.rd

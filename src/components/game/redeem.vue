@@ -85,7 +85,7 @@ export default {
       let random = 0
       //Logic
       for (let skill of skills) {
-        let char = state[skill.caster.team].char[skill.caster.id]
+        let char = state[skill.caster.team].chars[skill.caster.id]
         let skillCost = char.skills[skill.skill].cost
         random += skillCost.rd
       }
@@ -116,7 +116,7 @@ export default {
       }
       //Logic
       for (let skill of skills) {
-        let char = state[skill.caster.team].char[skill.caster.id]
+        let char = state[skill.caster.team].chars[skill.caster.id]
         let skillCost = char.skills[skill.skill].cost
 
         cost.g += skillCost.g
@@ -139,7 +139,7 @@ export default {
   methods: {
     image: function(team, char, skill) {
       let state = this.$store.getters['game/state']
-      return state[team].char[char].skills[skill].picture
+      return state[team].chars[char].skills[skill].picture
     },
     plus: function(energy) {
       let redeem = this.$store.getters['game/redeem']

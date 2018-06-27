@@ -1,6 +1,6 @@
 <template>
   <div :class="layout">
-    <char v-for="(char, index) in state[team].char" :team="team" :char="index" :key="index"></char>
+    <char v-for="(char, index) in state[team].chars" :team="team" :char="index" :key="index"></char>
   </div>
 </template>
 

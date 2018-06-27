@@ -2,8 +2,8 @@
   <div :class="layout">
     <div class="column char justify-between">
       <div class="char__img">
-        <img v-if="status(char, team)" @click="target({char, team})" :src="state[team].char[char].picture" />
-        <img v-if="!status(char, team)" :src="state[team].char[char].picture" class="disabled" />
+        <img v-if="status(char, team)" @click="target({char, team})" :src="state[team].chars[char].picture" />
+        <img v-if="!status(char, team)" :src="state[team].chars[char].picture" class="disabled" />
       </div>
       <div class="char__hp">
         <p>{{details.hp}}</p>
@@ -129,7 +129,7 @@ export default {
         : 'row reverse char__wrapper'
     },
     details: function() {
-      return this.state[this.team].char[this.char]
+      return this.state[this.team].chars[this.char]
     }
   },
   methods: {
@@ -153,7 +153,7 @@ export default {
       if (type === 'img') {
         if (inQueue > -1) {
           let skill = action[inQueue].skill
-          return state[team].char[char].skills[skill].picture
+          return state[team].chars[char].skills[skill].picture
         }
         return 'https://i.imgur.com/EB6t4nN.jpg'
       }
@@ -163,11 +163,11 @@ export default {
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
       let buffer = this.$store.getters['game/buffer']
-      let details = state[team].char[char]
+      let details = state[team].chars[char]
       //Logic
       if (buffer.active) {
         let skill =
-          state[buffer.caster.team].char[buffer.caster.id].skills[buffer.skill]
+          state[buffer.caster.team].chars[buffer.caster.id].skills[buffer.skill]
         let target = skill.target
 
         //Check Marking
