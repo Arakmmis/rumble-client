@@ -30,7 +30,7 @@ let effectMutable = {
   stack: 0,
   charge: 0,
   multi: 0,
-  active: true //May not be needed if root back to onUsing
+  active: true //Use this for target state persistence
 }
 
 let effectState = {
