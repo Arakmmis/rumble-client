@@ -11,7 +11,7 @@
     <div class="status" v-for="(item, index) of status" :key="'stauts'+index">
       <img :src="item.picture" />
       <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf">
-        <p v-for="(desc, index) of descriptions(item.parent, item.caster.id, item.caster.team)" :key="index" class="tooltip">
+        <p v-for="(desc, index) of descriptions(item.parent, item.caster.char, item.caster.team)" :key="index" class="tooltip">
           {{desc}}
         </p>
       </q-tooltip>
@@ -81,7 +81,7 @@ export default {
         status.onState
       )
       allStatus = _.uniqBy(allStatus, v =>
-        [v.parent, v.caster.id, v.caster.team].join()
+        [v.parent, v.caster.char, v.caster.team].join()
       )
       return allStatus
     },
@@ -109,7 +109,7 @@ export default {
       )
       let queue = action.filter(x => {
         let targeting =
-          self.state[x.caster.team].chars[x.caster.id].skills[x.skill].target
+          self.state[x.caster.team].chars[x.caster.char].skills[x.skill].target
         if (
           x.target.id === char &&
           x.target.team === team &&
@@ -127,11 +127,11 @@ export default {
         return false
       })
       return queue.map(x => {
-        let char = this.state[x.caster.team].chars[x.caster.id]
+        let char = this.state[x.caster.team].chars[x.caster.char]
         return {
           picture: char.skills[x.skill].picture,
           skill: char.skills[x.skill].name,
-          char: char.chars[x.caster.id].name
+          char: char.name
         }
       })
     },
@@ -145,7 +145,9 @@ export default {
       )
       allStatus = allStatus.filter(
         x =>
-          x.parent === parent && x.caster.id === char && x.caster.team === team
+          x.parent === parent &&
+          x.caster.char === char &&
+          x.caster.team === team
       )
       let description = allStatus.map(x => {
         let type = x.type

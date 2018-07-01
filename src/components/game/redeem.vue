@@ -21,7 +21,7 @@
         <button @click="minus('w')" :disabled="redeem.w === 0">-</button> {{redeem.w}}</p>
       <div class="q-mb-sm">
         <draggable v-model='action'>
-          <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.id,item.skill)" class="redeem__img" />
+          <img v-for="(item, index) in action" :key="index" :src="image(item.caster.team,item.caster.char,item.skill)" class="redeem__img" />
         </draggable>
       </div>
       <div class="row justify-around">
@@ -85,7 +85,7 @@ export default {
       let random = 0
       //Logic
       for (let skill of skills) {
-        let char = state[skill.caster.team].chars[skill.caster.id]
+        let char = state[skill.caster.team].chars[skill.caster.char]
         let skillCost = char.skills[skill.skill].cost
         random += skillCost.rd
       }
@@ -116,7 +116,7 @@ export default {
       }
       //Logic
       for (let skill of skills) {
-        let char = state[skill.caster.team].chars[skill.caster.id]
+        let char = state[skill.caster.team].chars[skill.caster.char]
         let skillCost = char.skills[skill.skill].cost
 
         cost.g += skillCost.g

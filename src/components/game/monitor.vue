@@ -170,7 +170,7 @@ export default {
       }
       //Logic
       for (let skill of skills) {
-        let char = state[skill.caster.team].chars[skill.caster.id]
+        let char = state[skill.caster.team].chars[skill.caster.char]
         let skillCost = char.skills[skill.skill].cost
 
         cost.g += skillCost.g

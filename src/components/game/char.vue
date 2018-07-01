@@ -140,7 +140,7 @@ export default {
       let turn = state.turn % 2 === 0 ? 'even' : 'odd'
       let inQueue = action.findIndex(
         x =>
-          x.caster.id === char &&
+          x.caster.char === char &&
           x.caster.team === team &&
           x.turnid === state.turnid
       )
@@ -167,7 +167,7 @@ export default {
       //Logic
       if (buffer.active) {
         let skill =
-          state[buffer.caster.team].chars[buffer.caster.id].skills[buffer.skill]
+          state[buffer.caster.team].chars[buffer.caster.char].skills[buffer.skill]
         let target = skill.target
 
         //Check Marking
@@ -176,7 +176,7 @@ export default {
             x =>
               x.type === 'mark' &&
               x.parent === buffer.skill &&
-              x.caster.id === buffer.caster.id &&
+              x.caster.char === buffer.caster.char &&
               x.caster.team === buffer.caster.team
           )
         ) {
@@ -204,7 +204,7 @@ export default {
             return team === meta.ally ? true : false
             break
           case 'self':
-            return team === meta.ally && buffer.caster.id === char
+            return team === meta.ally && buffer.caster.char === char
               ? true
               : false
             break
@@ -228,7 +228,7 @@ export default {
       let action = this.$store.getters['game/action']
       let inQueue = action.findIndex(
         x =>
-          x.caster.id === char &&
+          x.caster.char === char &&
           x.caster.team === team &&
           x.turnid === state.turnid
       )

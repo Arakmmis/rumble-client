@@ -40,7 +40,7 @@ export const queue = (state, payload) => {
     let buffer = {
       active: true,
       caster: {
-        id: pkg.char,
+        char: pkg.char,
         team: pkg.team
       },
       skill: pkg.skill,
@@ -53,7 +53,7 @@ export const queue = (state, payload) => {
     state.action = state.action.filter(
       x =>
         !(
-          x.caster.id === pkg.char &&
+          x.caster.char === pkg.char &&
           x.caster.team === pkg.team &&
           x.skill === pkg.skill &&
           x.turnid === pkg.turnid
