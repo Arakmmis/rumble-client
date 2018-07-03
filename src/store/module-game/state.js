@@ -12,11 +12,20 @@ export default {
   redeem: {
     g: 0,
     r: 0,
-    b: 0,    
+    b: 0,
     w: 0
   },
+  exchange: {
+    receive: '',
+    offer: {
+      g: 0,
+      r: 0,
+      b: 0,
+      w: 0
+    }
+  },
   meta: {
-    mode: 'playing', //playing, spectate, replay    
+    mode: 'playing', //playing, spectate, replay
     channel: 'private', //private, ladder,
     ally: 'odd',
     enemy: 'even'

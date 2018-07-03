@@ -19,6 +19,23 @@ export const meta = (state, payload) => {
   state.meta = payload
 }
 
+export const exchange = (state, payload) => {
+  let { type, pkg } = payload
+  if (type === 'RESET') {
+    state.exchange.receive = ''
+    state.exchange.offer = {
+      g: 0,
+      r: 0,
+      b: 0,
+      w: 0
+    }
+  }
+  if (type === 'EXCHANGE') {
+    state.exchange.receive = pkg.receive
+    state.exchange.offer = pkg.offer
+  }
+}
+
 export const redeem = (state, payload) => {
   let { type, pkg } = payload
   if (type === 'RESET') {

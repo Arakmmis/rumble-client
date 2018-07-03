@@ -103,6 +103,19 @@ export default {
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
       let action = this.$store.getters['game/action']
+      //Exchange
+      let exchangeOffer = this.$store.getters['game/exchange'].offer
+      let exchangeReceive = this.$store.getters['game/exchange'].receive
+      let exchange = { ...exchangeOffer }
+      let receive = {
+        g: 0,
+        r: 0,
+        b: 0,
+        w: 0
+      }
+      if (exchangeReceive !== '') {
+        receive[exchangeReceive] = receive[exchangeReceive] + 1
+      }
       //Define
       let energy = state[meta.ally].energy
       let total = energy.g + energy.r + energy.b + energy.w
@@ -127,12 +140,14 @@ export default {
       }
       //Return
       let costTotal = cost.g + cost.r + cost.b + cost.w + cost.rd
+      let exchangeTotal = exchange.g + exchange.r + exchange.b + exchange.w
+      let receiveTotal = receive.g + receive.r + receive.b + receive.w
       return {
-        g: energy.g - cost.g,
-        r: energy.r - cost.r,
-        b: energy.b - cost.b,
-        w: energy.w - cost.w,
-        t: total - costTotal
+        g: energy.g - cost.g - exchange.g + receive.g,
+        r: energy.r - cost.r - exchange.r + receive.r,
+        b: energy.b - cost.b - exchange.b + receive.b,
+        w: energy.w - cost.w - exchange.w + receive.w,
+        total: total - costTotal - exchangeTotal + receiveTotal
       }
     }
   },
@@ -169,8 +184,10 @@ export default {
       let payload = {
         action: this.$store.getters['game/action'],
         redeem: this.$store.getters['game/redeem'],
+        exchange: this.$store.getters['game/exchange'],
         room: this.$route.params.room
       }
+      console.log(payload)
       socket.emit('battle', payload)
       this.opened = false
     }

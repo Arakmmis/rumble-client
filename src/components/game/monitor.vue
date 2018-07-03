@@ -12,15 +12,16 @@
           <span class="energy__r"></span> {{energy.r}}
           <span class="energy__b"></span> {{energy.b}}
           <span class="energy__w"></span> {{energy.w}}
-          <b>T</b> {{energy.t}}
+          <b>T</b> {{energy.total}}
         </p>
         <p>TURN {{state.turn}} - LADDER</p>
       </div>
-      <div class="row game__monitor--exchange" v-if="false">
-        <p>ENERGY EXCHANGE</p>
-        <p>UNDO</p>
+      <div class="row game__monitor--exchange">
+        <p @click="exchange">ENERGY EXCHANGE</p>
+        <p @click="undo">UNDO</p>
       </div>
       <redeem ref="redeem"></redeem>
+      <exchange ref="exchange"></exchange>
     </div>
     <profile :team="meta.enemy" />
   </div>
@@ -130,12 +131,14 @@
 <script>
 //Components
 import redeem from './redeem'
+import exchange from './exchange'
 import profile from './profile'
 
 export default {
   name: 'GameMonitor',
   components: {
     redeem,
+    exchange,
     profile
   },
   data() {
@@ -157,6 +160,19 @@ export default {
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
       let action = this.$store.getters['game/action']
+      //Exchange
+      let exchangeOffer = this.$store.getters['game/exchange'].offer
+      let exchangeReceive = this.$store.getters['game/exchange'].receive
+      let exchange = { ...exchangeOffer }
+      let receive = {
+        g: 0,
+        r: 0,
+        b: 0,
+        w: 0
+      }
+      if (exchangeReceive !== '') {
+        receive[exchangeReceive] = receive[exchangeReceive] + 1
+      }
       //Define
       let energy = state[meta.ally].energy
       let total = energy.g + energy.r + energy.b + energy.w
@@ -181,18 +197,28 @@ export default {
       }
       //Return
       let costTotal = cost.g + cost.r + cost.b + cost.w + cost.rd
+      let exchangeTotal = exchange.g + exchange.r + exchange.b + exchange.w
+      let receiveTotal = receive.g + receive.r + receive.b + receive.w
       return {
-        g: energy.g - cost.g,
-        r: energy.r - cost.r,
-        b: energy.b - cost.b,
-        w: energy.w - cost.w,
-        t: total - costTotal
+        g: energy.g - cost.g - exchange.g + receive.g,
+        r: energy.r - cost.r - exchange.r + receive.r,
+        b: energy.b - cost.b - exchange.b + receive.b,
+        w: energy.w - cost.w - exchange.w + receive.w,
+        total: total - costTotal - exchangeTotal + receiveTotal
       }
     }
   },
   methods: {
     redeem: function() {
       this.$refs.redeem.open()
+    },
+    exchange: function() {
+      if (this.energy.total >= 5) {
+        this.$refs.exchange.open()
+      }
+    },
+    undo: function() {
+      this.$store.commit('game/exchange', { type: 'RESET' })
     }
   }
 }
