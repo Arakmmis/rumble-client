@@ -50,8 +50,8 @@
 
 <script>
 import io from 'socket.io-client'
-const socket = io('http://localhost:3000')
-// const socket = io('http://35.231.223.180:3000')
+// const socket = io('http://localhost:3000')
+const socket = io('http://35.231.223.180:3000')
 import draggable from 'vuedraggable'
 
 export default {
