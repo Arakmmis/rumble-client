@@ -1,11 +1,12 @@
 <template>
   <q-page class="flex flex-center game--background">
-    <div v-if="loaded">
+    <div class="game--width" v-if="loaded">
       <monitor></monitor>
-      <div class="row justify-center">
+      <div class="row justify-between">
         <team :team="meta.ally"></team>
         <team :team="meta.enemy"></team>
       </div>
+      <panel></panel>
     </div>
   </q-page>
 </template>
@@ -19,6 +20,10 @@
   -o-background-size: cover;
   background-size: cover;
   padding: 5px;
+}
+
+.game--width {
+  max-width: 840px;
 }
 
 .energy__g {
@@ -76,17 +81,19 @@
 
 <script>
 import io from 'socket.io-client'
-// const socket = io('http://localhost:3000')
-const socket = io('http://35.231.223.180:3000')
+const socket = io('http://localhost:3000')
+// const socket = io('http://35.231.223.180:3000')
 import monitor from 'components/game/monitor'
 import team from 'components/game/team'
+import panel from 'components/game/panel'
 let store, route
 
 export default {
   name: 'GameIndex',
   components: {
     monitor,
-    team
+    team,
+    panel
   },
   created: function() {
     store = this.$store

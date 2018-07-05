@@ -31,8 +31,8 @@
 .skill {
   background: #fff;
   position: relative;
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
   margin: 0 5px;
   border: 1px solid #222;
 

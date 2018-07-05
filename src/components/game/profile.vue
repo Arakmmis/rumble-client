@@ -25,12 +25,12 @@ export default {
     layout: function() {
       let meta = this.$store.getters['game/meta']
       let layoutLeft = {
-        wrapper: 'row game__profile',
+        wrapper: 'row justify-end game__profile col',
         details: 'column items-end game__profile--details'
       }
       let layoutRight = {
-        wrapper: 'row reverse game__profile',
-        details: 'column items-start game__profile--details'
+        wrapper: 'row game__profile col',
+        details: 'column items-start game__profile--details order-last'
       }
       return this.team === meta.ally ? layoutLeft : layoutRight
     },
@@ -43,7 +43,8 @@ export default {
 
 <style scoped lang="stylus">
 .game__profile {
-  height: 75px;
+  height: 65px;
+  padding: 0px 10px;
 
   @media screen and (max-width: 800px) {
     height: 40px;
@@ -51,8 +52,8 @@ export default {
 }
 
 .game__profile--img {
-  height: 75px;
-  width: 75px;
+  height: 65px;
+  width: 65px;  
 
   @media screen and (max-width: 800px) {
     height: 40px;

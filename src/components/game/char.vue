@@ -70,7 +70,7 @@
 
 .char__hp p {
   margin: 0;
-  font-size: 12px;
+  font-size: 10px;
 
   @media screen and (max-width: 800px) {
     font-size: 8px;
@@ -86,8 +86,8 @@
 }
 
 .queue__img {
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
   border-radius: 5px;
   border: 1px solid #222;
 
