@@ -38,7 +38,7 @@
       </q-field>
 
       <q-field label="Target" helper="Self, All Allies, Other Allies, Enemy, All Enemies, Random Enemy">
-        <q-select v-model="model.target" :options="target" />
+        <q-select v-model="model.target" :options="target.skill" />
       </q-field>
 
       <q-field label="Cooldown" helper="Minimum 0" type="number">
@@ -54,17 +54,38 @@
         <q-input v-model="model.cost.rd" float-label="Random" />
       </q-field>
 
+      <q-field label="Harmful">
+        <q-toggle v-model="model.isHarmful"/>        
+      </q-field>
+      <q-field label="Allowed">
+        <q-toggle v-model="model.isAllowed"/>
+        <q-btn label="Condition" color="primary" @click="evaluate" icon="save" />
+      </q-field>
+      <q-field label="Store">
+        <q-toggle v-model="model.isStore" />
+      </q-field>
+      <q-field label="Ignore Invul">
+        <q-toggle v-model="model.isIgnoreInvul" />
+      </q-field>
+      <q-field label="Ignore Stun">
+        <q-toggle v-model="model.isIgnoreStun" />
+      </q-field>
+      <q-field label="Ignore Counter">
+        <q-toggle v-model="model.isIgnoreCounter" />
+      </q-field>
+
       <q-card-separator class="q-my-md" />
 
       <p>Add Effects</p>
       <q-field label="Effect Name">
         <div class="row col-12 justify-between">
-          <q-input v-model="create.effect" class="col-8" />
+          <!-- <q-input v-model="create.effect" class="col-8" /> -->
+          <q-select v-model="create.effect" :options="types" class="col" />
           <q-btn label="Add" color="primary" @click="effect('add')" icon="save" />
         </div>
       </q-field>
 
-      <p v-for="(item, index) in effects" :key="index">{{item.name}}</p>
+      <p v-for="(item, index) in effects" :key="'skill'+skillActive+index">{{item.type}}</p>
 
       <evaluator ref="evaluator" />
     </q-card-main>
@@ -73,7 +94,7 @@
 
 <script>
 import skill from '../../definitions/skill'
-import effect from '../../definitions/effect'
+import effect, { types } from '../../definitions/effect'
 import target from '../../definitions/target'
 import persistence from '../../definitions/persistence'
 import classes from '../../definitions/classes'
@@ -87,6 +108,7 @@ export default {
   },
   data() {
     return {
+      types,
       target,
       persistence,
       classes,
@@ -119,6 +141,7 @@ export default {
       })
     },
     effects: function() {
+      console.log(this.char.skills[this.skillActive].effects, this.skillActive)
       return this.char.skills[this.skillActive].effects
     }
   },
@@ -130,7 +153,9 @@ export default {
     effect: function(type, pkg) {
       if (type === 'add') {
         let prep = _.cloneDeep(effect)
-        prep.name = this.create.effect
+        prep.type = this.create.effect
+        prep.during = 'this turn'
+        prep.class = this.char.skills[this.skillActive].class
         let payload = {
           type: 'EFFECT_ADD',
           skill: this.skillActive,

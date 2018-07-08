@@ -24,7 +24,7 @@
         <q-input v-model="model.val" />
       </q-field>
       <q-field label="Target" helper="Self, All Allies, Other Allies, Enemy, All Enemies, Random Enemy">
-        <q-select v-model="model.target" :options="target" />
+        <q-select v-model="model.target" :options="target.effect" />
       </q-field>
 
       <q-field label="Duration" helper="Minimum 1, or -1 for Indefinite">
@@ -55,31 +55,22 @@
       </q-field>
 
       <q-field label="Stack">
-        <q-checkbox v-model="model.isStack" />
+        <q-toggle v-model="model.isStack" />
       </q-field>
       <q-field label="Invisible">
-        <q-checkbox v-model="model.isInvisible" />
+        <q-toggle v-model="model.isInvisible" />
       </q-field>
       <q-field label="Multi">
-        <q-checkbox v-model="model.isMulti" />
+        <q-toggle v-model="model.isMulti" />
       </q-field>
       <q-field label="Unremovable">
-        <q-checkbox v-model="model.isUnremovable" />
-      </q-field>
-      <q-field label="Marking">
-        <q-checkbox v-model="model.isMarking" />
+        <q-toggle v-model="model.isUnremovable" />
       </q-field>
       <q-field label="Harmful">
-        <q-checkbox v-model="model.isHarmful" />
+        <q-toggle v-model="model.isHarmful" />
       </q-field>
       <q-field label="Piercing">
-        <q-checkbox v-model="model.isPiercing" />
-      </q-field>
-      <q-field label="Active">
-        <q-checkbox v-model="model.isActive" />
-      </q-field>
-      <q-field label="No Counter">
-        <q-checkbox v-model="model.isNoCounter" />
+        <q-toggle v-model="model.isPiercing" />
       </q-field>
 
       <q-card-separator class="q-my-md" />
@@ -147,7 +138,7 @@ export default {
     effectsOption: function() {
       return this.skills[this.skillActive].effects.map((x, i) => {
         return {
-          label: x.name,
+          label: x.type,
           value: i
         }
       })

@@ -1,4 +1,4 @@
-let target = [
+let skill = [
   'self',
   'ally',
   'all allies',
@@ -14,4 +14,21 @@ let target = [
   }
 })
 
-export default target
+let effect = [
+  'caster',
+  'target',
+  'target allies',
+  'target ally',
+  'caster allies',
+  'caster ally'
+].map(x => {
+  return {
+    label: x,
+    value: x
+  }
+})
+
+export default {
+  skill,
+  effect
+}

@@ -2,7 +2,8 @@
 
 let effectView = {
   name: '', //Inherit from Skill
-  description: ''
+  description: '',
+  display: '' //Internal nickname
 }
 
 let effectMeta = {
@@ -21,7 +22,7 @@ let effectBasic = {
   condition: [], //This mechanic will trigger if certain condition is fulfilled
   persistence: '', //Persistence of effect
   class: '', //Class of effect
-  scope: ['none', [], ''], // For Classes ["classes", ["items"], "extent (inclusive/exclusive)", ["effect type"]], //For Skills ['skills', ['skill name']]
+  scope: ['all', [], ''] // For Classes ["classes", ["items"], "extent (inclusive/exclusive)", ["effect type"]], //For Skills ['skills', ['skill name']]
 }
 
 let effectMutable = {
@@ -101,7 +102,14 @@ export const schema = [
   },
   {
     type: 'remove',
-    action: ['harmful', 'non-harmful', 'class', 'persistence', 'specific', 'all']
+    action: [
+      'harmful',
+      'non-harmful',
+      'class',
+      'persistence',
+      'specific',
+      'all'
+    ]
   },
   {
     type: 'cooldown',

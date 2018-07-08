@@ -38,7 +38,7 @@ let skillState = {
   isAllowed: ["condition"], //Condition
   isCooldown: false,
   isStore: false,
-  isNoCounter: false,
+  isIgnoreCounter: false,
   isIgnoreStun: false,
   isIgnoreInvul: false
 };
