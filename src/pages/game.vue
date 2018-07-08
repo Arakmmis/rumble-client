@@ -23,6 +23,7 @@
 }
 
 .game--width {
+  width: 100%;
   max-width: 840px;
 }
 
@@ -77,12 +78,25 @@
     height: 7px;
   }
 }
+
+.energy__rd {
+  display: inline-block;
+  background-color: rgb(0, 0, 0);
+  height: 10px;
+  width: 10px;
+  border: 0.5px solid #222;
+
+  @media screen and (max-width: 800px) {
+    width: 7px;
+    height: 7px;
+  }
+}
 </style>
 
 <script>
 import io from 'socket.io-client'
-// const socket = io('http://localhost:3000')
-const socket = io('http://35.231.223.180:3000')
+const socket = io('http://localhost:3000')
+// const socket = io('http://35.231.223.180:3000')
 import monitor from 'components/game/monitor'
 import team from 'components/game/team'
 import panel from 'components/game/panel'

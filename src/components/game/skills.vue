@@ -1,9 +1,9 @@
 <template>
-  <div class="row skill__wrapper">
+  <div class="row skill__wrapper" v-if="show">
     <div v-for="(skill, index) in skills" :key="index" class="skill">
       <!-- <p>{{skill.name}}</p> -->
-      <img v-if="status(char,skill,team)" @click="queue({char, team, skill: index})" :src="skill.picture" />
-      <img v-if="!status(char,skill,team)" :src="skill.picture" class="disabled" />
+      <img v-if="status(char,skill,team)" v-on:click="queue({char, team, skill: index})" :src="skill.picture" />
+      <img v-if="!status(char,skill,team)" v-on:click="description({char, team, skill: index})" :src="skill.picture" class="skill__img--disabled" />
       <p v-if="cooldownShow(skill, team)" class="cooldown flex flex-center">{{skill.counter}}</p>
       <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf" v-if="$q.platform.is.mobile">
         <p class="q-ma-none">Test</p>
@@ -18,10 +18,10 @@
 }
 
 .skill__wrapper {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.8);
   padding: 5px;
   border-radius: 2px;
-  border: 1px solid #222;
+  // border: 1px solid #222;
 
   @media screen and (max-width: 800px) {
     padding: 2px;
@@ -45,6 +45,10 @@
 .skill img {
   width: 100%;
   height: 100%;
+}
+
+.skill__img--disabled {
+  opacity: 0.6;
 }
 
 .cooldown {
@@ -83,6 +87,15 @@ export default {
         tooltipSelf: 'top right'
       }
       return this.team === meta.ally ? layoutLeft : layoutRight
+    },
+    show: function() {
+      let meta = this.$store.getters['game/meta']
+      let settings = this.$store.getters['game/settings'].skills
+      if (this.team === meta.ally) {
+        return true
+      } else {
+        return settings
+      }
     },
     energy: function() {
       return function(team) {
@@ -145,6 +158,17 @@ export default {
         pkg: pkg
       }
       this.$store.commit('game/queue', payload)
+      this.description(pkg)
+    },
+    description: function(pkg) {
+      let payload = {
+        type: 'SKILL',
+        pkg: {
+          mode: 'skill',
+          ...pkg
+        }
+      }
+      this.$store.commit('game/desc', payload)
     },
     status: function(char, skill, team) {
       //Define from Getters

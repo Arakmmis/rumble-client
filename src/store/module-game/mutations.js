@@ -106,3 +106,29 @@ export const buffer = (state, payload) => {
     }
   }
 }
+
+export const desc = (state, payload) => {
+  let { type, pkg } = payload
+  if (type === 'PROFILE') {
+    state.desc.mode = 'profile'
+    state.desc.team = pkg.team
+  }
+  if (type === 'CHAR') {
+    state.desc.mode = 'char'
+    state.desc.team = pkg.team
+    state.desc.char = pkg.char
+  }
+  if (type === 'SKILL') {
+    state.desc.mode = 'skill'
+    state.desc.team = pkg.team
+    state.desc.char = pkg.char
+    state.desc.skill = pkg.skill
+  }
+}
+
+export const settings = (state, payload) => {
+  let { type } = payload
+  if (type === 'SKILLS') {
+    state.settings.skills = !state.settings.skills
+  }
+}

@@ -1,9 +1,9 @@
 <template>
-  <div :class="layout">
+  <div :class="layout.wrapper">
     <div class="column char justify-between">
-      <div class="char__img">
-        <img v-if="status(char, team)" @click="target({char, team})" :src="state[team].chars[char].picture" />
-        <img v-if="!status(char, team)" :src="state[team].chars[char].picture" class="disabled" />
+      <div :class="layout.char">
+        <img v-if="status(char, team)" @click="target({char, team})" :src="state[team].chars[char].picture" class="char__img--active" />
+        <img v-if="!status(char, team)" v-on:click="description({char, team})" :src="state[team].chars[char].picture" class="char__img--disabled" />
       </div>
       <div class="char__hp">
         <p>{{details.hp}}</p>
@@ -12,8 +12,8 @@
     <div class="column">
       <status :team="team" :char="char" />
       <div class="row items-center">
-        <div class="queue">
-          <div v-if="queue('visible',char,team)" class="queue__img">
+        <div class="queue" v-if="queue('visible',char,team)">
+          <div class="queue__img">
             <img @dblclick="remove(char,team)" v-if="queue('icon',char,team)" :src="queue('img',char,team)" />
             <img v-if="!queue('icon',char,team)" src="https://i.imgur.com/EB6t4nN.jpg" />
           </div>
@@ -37,8 +37,17 @@
   }
 }
 
+.char__img img {
+  width: 100%;
+  height: 100%;
+}
+
+.char__img--flip {
+  transform: scaleX(-1);
+}
+
 .char__img {
-  background: #fff;
+  background: #FFFF00;
   border-radius: 2px;
   border: 1px solid #222;
   width: 75px;
@@ -51,9 +60,26 @@
   }
 }
 
-.char__img img {
-  width: 100%;
-  height: 100%;
+.char__img--active {
+  animation: pulse 2s infinite;
+}
+
+.char__img--disabled {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
 }
 
 .char__hp {
@@ -124,15 +150,36 @@ export default {
     },
     layout: function() {
       let meta = this.$store.getters['game/meta']
-      return this.team === meta.ally
-        ? 'row char__wrapper'
-        : 'row reverse char__wrapper'
+      // return this.team === meta.ally
+      //   ? 'row char__wrapper'
+      //   : 'row reverse char__wrapper'
+      if (this.team === meta.ally) {
+        return {
+          wrapper: 'row char__wrapper',
+          char: 'char__img'
+        }
+      } else {
+        return {
+          wrapper: 'row reverse char__wrapper',
+          char: 'char__img char__img--flip'
+        }
+      }
     },
     details: function() {
       return this.state[this.team].chars[this.char]
     }
   },
   methods: {
+    description: function(pkg) {
+      let payload = {
+        type: 'CHAR',
+        pkg: {
+          mode: 'char',
+          ...pkg
+        }
+      }
+      this.$store.commit('game/desc', payload)
+    },
     queue: function(type, char, team) {
       let state = this.$store.getters['game/state']
       let meta = this.$store.getters['game/meta']
@@ -167,7 +214,9 @@ export default {
       //Logic
       if (buffer.active) {
         let skill =
-          state[buffer.caster.team].chars[buffer.caster.char].skills[buffer.skill]
+          state[buffer.caster.team].chars[buffer.caster.char].skills[
+            buffer.skill
+          ]
         let target = skill.target
 
         //Check Marking

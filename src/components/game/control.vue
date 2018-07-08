@@ -1,8 +1,8 @@
 <template>
   <div class="column justify-between button--wrapper col-4">
     <p class="button">SURRENDER</p>
-    <p class="button">SKILLS</p>
-    <p class="button">SOUND</p>
+    <p class="button" @click="setSettings('skills')">{{settings.skills ? 'HIDE' : 'SHOW'}} SKILLS</p>
+    <p class="button">MUTE SOUND</p>
   </div>
 </template>
 
@@ -21,6 +21,16 @@ export default {
     layout: function() {
       let meta = this.$store.getters['game/meta']
       return this.team === meta.ally ? '' : 'items-end'
+    },
+    settings: function(type) {
+      return this.$store.getters['game/settings']
+    }
+  },
+  methods: {
+    setSettings: function(type) {
+      if (type === 'skills') {
+        this.$store.commit('game/settings', { type: 'SKILLS' })
+      }
     }
   }
 }
@@ -36,7 +46,8 @@ export default {
   text-align: center;
   border: 1px solid #222;
 }
-.button:last-child{
+
+.button:last-child {
   margin-bottom: 0px;
 }
 

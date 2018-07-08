@@ -8,7 +8,7 @@
         </p>
       </q-tooltip>
     </div>
-    <div class="status" v-for="(item, index) of status" :key="'stauts'+index">
+    <div class="status" v-for="(item, index) of status" :key="'status'+index">
       <img :src="item.picture" />
       <q-tooltip :anchor="layout.tooltipAnchor" :self="layout.tooltipSelf">
         <p v-for="(desc, index) of descriptions(item.parent, item.caster.char, item.caster.team)" :key="index" class="tooltip">
@@ -33,6 +33,7 @@
   width: 20px;
   height: 20px;
   border: 1px solid #222;
+  margin: 0px 2px;
 
   @media screen and (max-width: 415px) {
     border: 0px solid #222;
@@ -88,12 +89,12 @@ export default {
     layout: function() {
       let meta = this.$store.getters['game/meta']
       let layoutLeft = {
-        wrapper: 'row q-pl-sm status--wrapper',
+        wrapper: 'row status--wrapper',
         tooltipAnchor: 'bottom left',
         tooltipSelf: 'top left'
       }
       let layoutRight = {
-        wrapper: 'row reverse q-pr-sm status--wrapper',
+        wrapper: 'row reverse status--wrapper',
         tooltipAnchor: 'bottom right',
         tooltipSelf: 'top right'
       }

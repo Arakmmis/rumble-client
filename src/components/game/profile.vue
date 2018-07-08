@@ -5,7 +5,7 @@
       <!-- <p class="l--small">W/L/S - 10/2/5</p> -->
     </div>
     <div class="game__profile--img">
-      <img src="https://i.imgur.com/JUq1q2f.jpg">
+      <img @click="description({team})" src="https://i.imgur.com/JUq1q2f.jpg">
     </div>
   </div>
 </template>
@@ -34,8 +34,20 @@ export default {
       }
       return this.team === meta.ally ? layoutLeft : layoutRight
     },
-    player: function(){
+    player: function() {
       return this.state[this.team].name
+    }
+  },
+  methods: {
+    description: function(pkg) {
+      let payload = {
+        type: 'PROFILE',
+        pkg: {
+          mode: 'profile',
+          ...pkg
+        }
+      }
+      this.$store.commit('game/desc', payload)
     }
   }
 }
@@ -53,7 +65,7 @@ export default {
 
 .game__profile--img {
   height: 65px;
-  width: 65px;  
+  width: 65px;
 
   @media screen and (max-width: 800px) {
     height: 40px;
@@ -69,7 +81,7 @@ export default {
 .game__profile img {
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  // border-radius: 5px;
   border: 1px solid #222;
 }
 

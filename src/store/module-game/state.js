@@ -29,5 +29,15 @@ export default {
     channel: 'private', //private, ladder,
     ally: 'odd',
     enemy: 'even'
+  },
+  settings: {
+    sound: true,
+    skills: false
+  },
+  desc: {
+    mode: 'profile', //profile, char, skills,
+    char: 0, //char index
+    skill: 0, //skill index
+    team: '' //team -> ally or enemy
   }
 }

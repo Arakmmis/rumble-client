@@ -24,3 +24,9 @@ export const buffer = state => {
 export const exchange = state => {
   return state.exchange
 }
+export const settings = state => {
+  return state.settings
+}
+export const desc = state => {
+  return state.desc
+}
