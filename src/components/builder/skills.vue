@@ -43,7 +43,7 @@
 
       <q-field label="Cooldown" helper="Minimum 0" type="number">
         <q-input v-model="model.cooldown" />
-        <q-btn label="Evaluator" color="primary" @click="evaluate" icon="save" />
+        <q-btn label="Evaluator" color="primary" @click="evaluate({model: 'cooldown'})" icon="save" />
       </q-field>
 
       <q-field label="Cost" helper="">
@@ -55,11 +55,11 @@
       </q-field>
 
       <q-field label="Harmful">
-        <q-toggle v-model="model.isHarmful"/>        
+        <q-toggle v-model="model.isHarmful" />
       </q-field>
       <q-field label="Allowed">
-        <q-toggle v-model="model.isAllowed"/>
-        <q-btn label="Condition" color="primary" @click="evaluate" icon="save" />
+        <q-toggle v-model="model.isAllowed" />
+        <q-btn label="Condition" color="primary" @click="evaluate({model: 'isAllowed'})" icon="save" />
       </q-field>
       <q-field label="Store">
         <q-toggle v-model="model.isStore" />
@@ -87,7 +87,7 @@
 
       <p v-for="(item, index) in effects" :key="'skill'+skillActive+index">{{item.type}}</p>
 
-      <evaluator ref="evaluator" />
+      <evaluator ref="evaluator" v-on:send="register"/>
     </q-card-main>
   </q-card>
 </template>
@@ -146,8 +146,11 @@ export default {
     }
   },
   methods: {
-    evaluate: function() {
-      this.$refs.evaluator.open()
+    register: function(pkg){
+      console.log(pkg)
+    },
+    evaluate: function(pkg) {
+      this.$refs.evaluator.open(pkg)
     },
     save: function() {},
     effect: function(type, pkg) {

@@ -1,6 +1,6 @@
 <template>
   <q-modal v-model="opened">
-
+    {{parent.model}}
     <q-field label="Condition">
       <q-select v-model="model.condition" :options="condition" />
     </q-field>
@@ -23,7 +23,7 @@
       <q-input v-model="model.name" />
     </q-field>
 
-    <q-btn color="primary" @click="opened = false" label="Close" />
+    <q-btn color="primary" @click="close()" label="Close" />
   </q-modal>
 </template>
 
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       opened: false,
+      parent: {},
       model: {
         condition: '',
         evaluator: '',
@@ -76,7 +77,7 @@ export default {
           label: x.name,
           value: x.name
         }
-      })      
+      })
     },
     // effects: function() {
     //   let skills = this.$store.getters['builder/skills']
@@ -89,7 +90,7 @@ export default {
     //       label: x.name,
     //       value: x.name
     //     }
-    //   })      
+    //   })
     // },
     condition: function() {
       return condition.map(x => {
@@ -112,19 +113,16 @@ export default {
         int: evaluators.filter(x => x.self.eval === 'int'),
         bool: evaluators.filter(x => x.self.eval === 'bool')
       }
-    }
-    // model: function() {
-    //   return condition
-    //   // if (this.skillActive === false) {
-    //   //   return skill
-    //   // } else {
-    //   //   return this.skills[this.skillActive]
-    //   // }
-    // }
+    }    
   },
   methods: {
-    open: function() {
+    open: function(pkg) {
       this.opened = true
+      this.parent = pkg
+    },
+    close: function() {
+      this.opened = false
+      this.$emit('send', 'bye')
     }
   }
 }
