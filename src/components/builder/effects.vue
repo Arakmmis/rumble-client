@@ -28,7 +28,7 @@
       </q-field>
 
       <q-field label="Duration" helper="Minimum 1, or -1 for Indefinite">
-        <q-input v-model="model.duration" />
+        <q-input v-model="model.duration[0].value" />
       </q-field>
 
       <q-field label="During" helper="Effect take place during This Turn effect is applied or Next's Turn after effect is applied?">
@@ -41,12 +41,12 @@
 
       <q-field label="Scope" helper="Set Class/Skill specific effect">
         <div class="row col-12">
-          <q-select class="col-4" v-model="model.scope[0]" float-label="Type" :options="scope.type" />
-          <q-select class="col-4" v-model="model.scope[1]" multiple :options="makeOptions(scope.options[0])" v-if="model.scope[0] === 'classes'" />
-          <q-select class="col-4" v-model="model.scope[1]" multiple :options="makeOptions(scope.options[1])" v-if="model.scope[0] === 'types'" />
-          <q-select class="col-4" v-model="model.scope[1]" multiple :options="skillsOption" v-if="model.scope[0] === 'skills'" />
-          <q-select class="col-4" v-model="model.scope[2]" :options="makeOptions(scope.detail[0])" v-if="model.scope[0] === 'classes' || model.scope[0] === 'types'" />
-          <q-select class="col-4" v-model="model.scope[2]" :options="makeOptions(scope.detail[1])" v-if="model.scope[0] === 'skills'" />
+          <q-select class="col-4" v-model="model.scope.type" float-label="Type" :options="scope.type" />
+          <q-select class="col-4" v-model="model.scope.options" multiple :options="makeOptions(scope.options[0])" v-if="model.scope.type === 'classes'" />
+          <q-select class="col-4" v-model="model.scope.options" multiple :options="makeOptions(scope.options[1])" v-if="model.scope.type === 'effects'" />
+          <q-select class="col-4" v-model="model.scope.options" multiple :options="skillsOption" v-if="model.scope.type === 'skills'" />
+          <q-select class="col-4" v-model="model.scope.detail" :options="makeOptions(scope.detail[0])" v-if="model.scope.type === 'classes' || model.scope.type === 'effects'" />
+          <q-select class="col-4" v-model="model.scope.detail" :options="makeOptions(scope.detail[1])" v-if="model.scope.type === 'skills'" />
         </div>
       </q-field>
 

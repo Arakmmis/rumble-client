@@ -15,6 +15,7 @@ let target = [
 })
 
 export const condition = {
+  type: 'condition',
   subject: '',
   evaluator: '',
   comparison: '',

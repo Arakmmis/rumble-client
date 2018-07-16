@@ -2,7 +2,7 @@
   <q-page class="q-pt-none">
     <div class="column width-100">
       <p>Character Builder</p>
-      <q-tabs>
+      <q-tabs v-model="selectedTab">
         <!-- Tabs - notice slot="title" -->
         <q-tab default slot="title" name="tab-1" label="Create" />
         <q-tab slot="title" :disable="disable" name="tab-2" label="EDIT" />
@@ -12,7 +12,7 @@
 
         <!-- Targets -->
         <q-tab-pane name="tab-1">
-          <create @enable="enable"/>
+          <create @enable="enable" />
         </q-tab-pane>
         <q-tab-pane name="tab-2">
           <char />
@@ -61,17 +61,21 @@ export default {
     char,
     skills,
     effects,
-    result,    
+    result
   },
   data: function() {
     return {
-      disable: true
+      disable: true,
+      selectedTab: 'tab-1'
     }
   },
   methods: {
     enable: function() {
-      console.log('asdasd')
       this.disable = false
+    },
+    selectThirdTab() {
+      // we select third tab which has `name` set to 'tab-3'
+      this.selectedTab = 'tab-2'
     }
   }
 }

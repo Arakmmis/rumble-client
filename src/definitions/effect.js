@@ -16,13 +16,17 @@ let effectBasic = {
   val: 0,
   action: '', //tied per types
   target: 'target', //Caster or target
-  duration: 1, //How long it's active. Minimum of 1
+  duration: [{ type: 'default', value: 1 }], //How long it's active. Minimum of 1
   during: 'odd', //When will it trigger, odd turn or even turn
   after: [], //Callback after mechanic trigger
   condition: [], //This mechanic will trigger if certain condition is fulfilled
   persistence: '', //Persistence of effect
   class: '', //Class of effect
-  scope: ['all', [], ''] // For Classes ["classes", ["items"], "extent (inclusive/exclusive)", ["effect type"]], //For Skills ['skills', ['skill name']]
+  scope: {
+    type: 'all',
+    options: [],
+    detail: ''
+  } // For Classes ["classes", ["items"], "extent (inclusive/exclusive)", ["effect type"]], //For Skills ['skills', ['skill name']]
 }
 
 let effectMutable = {
@@ -39,13 +43,10 @@ let effectState = {
   isInvisible: false,
   isMulti: false,
   isUnremovable: false,
-  isMarking: false,
   isHarmful: false,
   isPiercing: false,
   isActive: false,
-  isLastTurn: false,
-  isAllowed: true,
-  isNoCounter: false
+  isLastTurn: false
 }
 
 let effect = {

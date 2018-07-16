@@ -92,12 +92,13 @@ export default {
         let charIndex = desc.char
         let skillIndex = desc.skill
         let skill = this.state[team].chars[charIndex].skills[skillIndex]
+        let classes = _.uniq(skill.effects.map(x => x.class))
         return {
           mode: mode,
           name: skill.name,
           description: skill.description,
           picture: skill.picture,
-          classes: skill.classes,
+          classes: skill.persistence+', '+classes.join(', '),
           cost: skill.cost,
           costTotal:
             skill.cost.g +

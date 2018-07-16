@@ -20,7 +20,7 @@
     </q-field>
 
     <q-field label="Value">
-      <q-input v-model="model.name" />
+      <q-input v-model="model.value" />
     </q-field>
 
     <q-btn color="primary" @click="close()" label="Close" />
@@ -79,19 +79,6 @@ export default {
         }
       })
     },
-    // effects: function() {
-    //   let skills = this.$store.getters['builder/skills']
-    //   let effects = []
-    //   for(skill in skills){
-    //     effects = effects.concat(skill.effects)
-    //   }
-    //   return effects.map(x => {
-    //     return {
-    //       label: x.name,
-    //       value: x.name
-    //     }
-    //   })
-    // },
     condition: function() {
       return condition.map(x => {
         return {
@@ -113,7 +100,7 @@ export default {
         int: evaluators.filter(x => x.self.eval === 'int'),
         bool: evaluators.filter(x => x.self.eval === 'bool')
       }
-    }    
+    }
   },
   methods: {
     open: function(pkg) {
@@ -121,8 +108,19 @@ export default {
       this.parent = pkg
     },
     close: function() {
+      let condition = {
+        type: 'condition',
+        subject: { ...this.model.condition },
+        evaluator: this.model.evaluator,
+        comparison: this.model.comparison,
+        value: this.model.value
+      }
+      let payload = {
+        pkg: condition,
+        model: this.parent.model
+      }
       this.opened = false
-      this.$emit('send', 'bye')
+      this.$emit('send', payload)
     }
   }
 }

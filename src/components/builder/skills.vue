@@ -23,9 +23,6 @@
       <q-field label="Picture">
         <q-input v-model="model.picture" helper="Paste Image URL" />
       </q-field>
-      <q-field label="Classes" helper="To show on description">
-        <q-input v-model="model.classes" />
-      </q-field>
 
       <q-card-separator class="q-my-md" />
 
@@ -55,23 +52,26 @@
       </q-field>
 
       <q-field label="Harmful">
-        <q-toggle v-model="model.isHarmful" />
+        <q-toggle v-model="model.isHarmful[0].value" />
       </q-field>
       <q-field label="Allowed">
-        <q-toggle v-model="model.isAllowed" />
+        <q-toggle v-model="model.isAllowed[0].value" />
         <q-btn label="Condition" color="primary" @click="evaluate({model: 'isAllowed'})" icon="save" />
+        <div v-for="(item, index) in model.isAllowed" :key="'isAllowed'+index">
+          <p>{{item}}</p>
+        </div>
       </q-field>
       <q-field label="Store">
-        <q-toggle v-model="model.isStore" />
+        <q-toggle v-model="model.isStore[0].value" />
       </q-field>
       <q-field label="Ignore Invul">
-        <q-toggle v-model="model.isIgnoreInvul" />
+        <q-toggle v-model="model.isIgnoreInvul[0].value" />
       </q-field>
       <q-field label="Ignore Stun">
-        <q-toggle v-model="model.isIgnoreStun" />
+        <q-toggle v-model="model.isIgnoreStun[0].value" />
       </q-field>
       <q-field label="Ignore Counter">
-        <q-toggle v-model="model.isIgnoreCounter" />
+        <q-toggle v-model="model.isIgnoreCounter[0].value" />
       </q-field>
 
       <q-card-separator class="q-my-md" />
@@ -87,7 +87,7 @@
 
       <p v-for="(item, index) in effects" :key="'skill'+skillActive+index">{{item.type}}</p>
 
-      <evaluator ref="evaluator" v-on:send="register"/>
+      <evaluator ref="evaluator" v-on:send="register" />
     </q-card-main>
   </q-card>
 </template>
@@ -141,13 +141,13 @@ export default {
       })
     },
     effects: function() {
-      console.log(this.char.skills[this.skillActive].effects, this.skillActive)
       return this.char.skills[this.skillActive].effects
     }
   },
   methods: {
-    register: function(pkg){
-      console.log(pkg)
+    register: function(payload) {
+      console.log(payload)
+      this.model[payload.model].push(payload.pkg)
     },
     evaluate: function(pkg) {
       this.$refs.evaluator.open(pkg)
