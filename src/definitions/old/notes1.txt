@@ -1,0 +1,82 @@
+{
+  "name": "Rainbow Cyclone",
+  "activation": {
+    "conditions": []
+  },
+  "selections": [
+    {
+      "type": "character",
+      "value": "singleEnemy"
+    }
+  ],
+  "costs": [
+    {
+      "type": "energy",
+      "value": "green",
+      "amount": 1
+    }
+  ],
+  "cooldown": 0,
+  "effects": [
+    {
+      "type": "damage",
+      "amount": 20,
+      "damageType": "energy",
+      "targets": ["selections[0]"]
+    },
+    {
+      "type": "energyCost",
+      "action": "increase",
+      "amount": {{this.costs}},
+      "targets": ["self", "selections[0]"],
+      "modifiers": [
+        {
+          "type": "duration",
+          "amount": 1
+        }
+      ]
+    }
+  ],
+  "classes": ["energy", "instant"]
+}
+
+{
+  "name": "Previous Life Potion",
+  "activation": {
+    "conditions": []
+  },
+  "selections": [
+    {
+      "type": "character",
+      "value": "singleCharacter"
+    }
+  ],
+  "costs": [],
+  "cooldown": 2,
+  "effects": [
+    {
+      "type": "condition",
+      "conditionType": "slow",
+      "targets": ["selection[0]"],
+      "modifiers": [
+        {
+          "type": "duration",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "type": "energy",
+      "action": "increase",
+      "targets": ["selection[0]"],
+      "amount": [
+        {
+          "type": "energy",
+          "value": "random",
+          "amount": 1
+        }
+      ]
+    }
+  ],
+  "classes": ["strategic", "instant"]
+}

@@ -1,0 +1,8 @@
+{
+      "type": "gameStat",
+      "statName": "hp",
+      "operator": "-",
+      "amount": 20,
+      "targets": ["selections[0]"],
+      "tags": "energy"
+}   

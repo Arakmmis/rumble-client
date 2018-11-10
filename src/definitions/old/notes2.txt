@@ -1,0 +1,47 @@
+{
+  "name": "Dimensional Sphere",
+  "activation": {
+    "conditions": []
+  },
+  "selections": [
+    {
+      "type": "character",
+      "value": "singleCharacter"
+    }
+  ],
+  "costs": [
+    {
+      "type": "energy",
+      "value": "green",
+      "amount": 1
+    }
+  ],
+  "cooldown": 3,
+  "effects": [
+    {
+      "type": "condition",
+      "conditionType": "invulnerable",
+      "targets": ["selection[0]"],
+      "modifiers": [
+        {
+          "type": "duration",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "type": "condition",
+      "conditionType": "stun",
+      "targets": ["selection[0]"],
+      "modifiers": [
+        {
+          "type": "duration",
+          "value": 1
+        }
+      ]
+    },
+    {
+      
+    }
+  ]
+}

@@ -16,7 +16,6 @@
 
     <q-field label="Comparison">
       <q-select v-model="model.comparison" :options="options.int" v-if="model.condition.eval === 'int'" />
-      <!-- <q-input type="number" v-model="model.comparison" /> -->
     </q-field>
 
     <q-field label="Value">
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import { condition, evaluator } from '../../definitions/evaluator2'
+import { condition, evaluator } from '../../definitions/evaluator'
 import _ from 'lodash'
 
 export default {
@@ -45,6 +44,10 @@ export default {
       options: {
         int: [
           { label: '0', value: 0 },
+          { label: '1', value: 1 },
+          { label: '2', value: 2 },
+          { label: '3', value: 3 },
+          { label: '4', value: 4 },
           { label: '5', value: 5 },
           { label: '10', value: 10 },
           { label: '15', value: 15 },

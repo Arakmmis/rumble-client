@@ -7,12 +7,6 @@
       </q-field>
     </q-card-main>
 
-    <!-- <q-card-title>
-      <div class="row content-center items-center justify-between">
-        <p class="q-ma-none">Skill</p>
-        <q-btn label="Save Skill" color="primary" @click="save" icon="save" />
-      </div>
-    </q-card-title> -->
     <q-card-main v-if="skillActive !== false">
       <q-field label="Name">
         <q-input v-model="model.name" />
@@ -27,28 +21,33 @@
       <q-card-separator class="q-my-md" />
 
       <q-field label="Persistence" helper="Instant, Action, Control, Aura, Passive">
-        <q-select v-model="model.persistence" :options="persistence" />
+        <q-select v-model="model.persistence[0].value" :options="persistence" />
       </q-field>
 
       <q-field label="Class" helper="Physical, Mental, Energy, Affliction, Strategic">
-        <q-select v-model="model.class" :options="classes" />
+        <q-select v-model="model.class[0].value" :options="classes" />
       </q-field>
 
       <q-field label="Target" helper="Self, All Allies, Other Allies, Enemy, All Enemies, Random Enemy">
-        <q-select v-model="model.target" :options="target.skill" />
+        <q-select v-model="model.target[0].value" :options="target.skill" />
       </q-field>
 
       <q-field label="Cooldown" helper="Minimum 0" type="number">
-        <q-input v-model="model.cooldown" />
-        <q-btn label="Evaluator" color="primary" @click="evaluate({model: 'cooldown'})" icon="save" />
+        <q-input v-model="model.cooldown[0].value" />
+        <q-btn label="Condition" color="primary" @click="evaluate({model: 'cooldown'})" icon="save" />
+        <div v-for="(item, index) in model.cooldown" :key="'cooldown'+index">
+          <p v-if="item.type === 'condition'">When {{item.subject.type}} of {{item.subject.owner}} is {{item.evaluator}} {{item.comparison}}, this will be {{item.value}} -
+            <span>delete</span>
+          </p>
+        </div>
       </q-field>
 
       <q-field label="Cost" helper="">
-        <q-input v-model="model.cost.g" float-label="Green" />
-        <q-input v-model="model.cost.r" float-label="Red" />
-        <q-input v-model="model.cost.b" float-label="Blue" />
-        <q-input v-model="model.cost.w" float-label="White" />
-        <q-input v-model="model.cost.rd" float-label="Random" />
+        <q-input v-model="model.cost.g[0].value" float-label="Green" />
+        <q-input v-model="model.cost.r[0].value" float-label="Red" />
+        <q-input v-model="model.cost.b[0].value" float-label="Blue" />
+        <q-input v-model="model.cost.w[0].value" float-label="White" />
+        <q-input v-model="model.cost.rd[0].value" float-label="Random" />
       </q-field>
 
       <q-field label="Harmful">
@@ -58,7 +57,9 @@
         <q-toggle v-model="model.isAllowed[0].value" />
         <q-btn label="Condition" color="primary" @click="evaluate({model: 'isAllowed'})" icon="save" />
         <div v-for="(item, index) in model.isAllowed" :key="'isAllowed'+index">
-          <p>{{item}}</p>
+          <p v-if="item.type === 'condition'">When {{item.subject.type}} of {{item.subject.owner}} is {{item.evaluator}} {{item.comparison}}, this will be {{item.value}} -
+            <span>delete</span>
+          </p>
         </div>
       </q-field>
       <q-field label="Store">
@@ -100,11 +101,13 @@ import persistence from '../../definitions/persistence'
 import classes from '../../definitions/classes'
 
 import evaluator from './evaluator'
+import BuilderForm from './BuilderForm'
 
 export default {
   name: 'BuilderSkills',
   components: {
-    evaluator
+    evaluator,
+    BuilderForm
   },
   data() {
     return {

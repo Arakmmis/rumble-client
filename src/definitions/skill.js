@@ -12,17 +12,17 @@ let skillMeta = {
 }
 
 let skillBasic = {
-  persistence: '',
-  class: '',
+  persistence: [{ type: 'default', value: 'instant', schema: 'string' }],
+  class: [{ type: 'default', value: 'physical', schema: 'string' }],
   effects: [],
-  target: '',
-  cooldown: 0,
+  target: [{ type: 'default', value: 'enemy', schema: 'string' }],
+  cooldown: [{ type: 'default', value: 0, schema: 'int' }],
   cost: {
-    g: 0,
-    r: 0,
-    b: 0,
-    w: 0,
-    rd: 0
+    g: [{ type: 'default', value: 0, schema: 'int' }],
+    r: [{ type: 'default', value: 0, schema: 'int' }],
+    b: [{ type: 'default', value: 0, schema: 'int' }],
+    w: [{ type: 'default', value: 0, schema: 'int' }],
+    rd: [{ type: 'default', value: 0, schema: 'int' }]
   }
 }
 
@@ -33,13 +33,13 @@ let skillMutable = {
 }
 
 let skillState = {
-  isHarmful: [{ type: 'default', value: true }],
-  isAllowed: [{ type: 'default', value: true }], //Condition
+  isHarmful: [{ type: 'default', value: true, schema: 'bool' }],
+  isAllowed: [{ type: 'default', value: true, schema: 'bool' }], //Condition
   isCooldown: false,
-  isStore: [{ type: 'default', value: false }],
-  isIgnoreCounter: [{ type: 'default', value: false }],
-  isIgnoreStun: [{ type: 'default', value: false }],
-  isIgnoreInvul: [{ type: 'default', value: false }]
+  isStore: [{ type: 'default', value: false, schema: 'bool' }],
+  isIgnoreCounter: [{ type: 'default', value: false, schema: 'bool' }],
+  isIgnoreStun: [{ type: 'default', value: false, schema: 'bool' }],
+  isIgnoreInvul: [{ type: 'default', value: false, schema: 'bool' }]
 }
 
 let skill = {

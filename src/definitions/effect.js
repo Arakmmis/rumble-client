@@ -13,10 +13,11 @@ let effectMeta = {
 }
 
 let effectBasic = {
-  val: 0,
+  type: '',
+  val: [{ type: 'default', value: 0, schema: 'int' }],
   action: '', //tied per types
-  target: 'target', //Caster or target
-  duration: [{ type: 'default', value: 1 }], //How long it's active. Minimum of 1
+  target: [{ type: 'default', value: 'target', schema: 'string' }], //Caster or target
+  duration: [{ type: 'default', value: 1, schema: 'int' }], //How long it's active. Minimum of 1
   during: 'odd', //When will it trigger, odd turn or even turn
   after: [], //Callback after mechanic trigger
   condition: [], //This mechanic will trigger if certain condition is fulfilled
@@ -39,14 +40,14 @@ let effectMutable = {
 }
 
 let effectState = {
-  isStack: false,
-  isInvisible: false,
-  isMulti: false,
-  isUnremovable: false,
-  isHarmful: false,
-  isPiercing: false,
-  isActive: false,
-  isLastTurn: false
+  isStack: [{ type: 'default', value: false, schema: 'bool' }],
+  isInvisible: [{ type: 'default', value: false, schema: 'bool' }],
+  isMulti: [{ type: 'default', value: false, schema: 'bool' }],
+  isUnremovable: [{ type: 'default', value: false, schema: 'bool' }],
+  isHarmful: [{ type: 'default', value: false, schema: 'bool' }],
+  isPiercing: [{ type: 'default', value: false, schema: 'bool' }],
+  isActive: [{ type: 'default', value: false, schema: 'bool' }],
+  isLastTurn: [{ type: 'default', value: false, schema: 'bool' }]
 }
 
 let effect = {

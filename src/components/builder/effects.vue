@@ -9,10 +9,6 @@
         <q-select v-model="effectActive" :options="effectsOption" />
       </q-field>
     </q-card-main>
-    <!-- <q-card-title>
-      <p>Effect</p>
-      <q-btn label="Save Effect" color="primary" @click="save" icon="save" />
-    </q-card-title> -->
     <q-card-main v-if="skillActive !== false && effectActive !== false">
       <q-field label="Name" helper="For internal purpose only">
         <q-input v-model="model.name" />
@@ -21,14 +17,18 @@
         <q-select v-model="model.type" :options="types" />
       </q-field>
       <q-field label="Value" helper="Value">
-        <q-input v-model="model.val" />
+        <q-input v-model="model.val[0].value" />
       </q-field>
       <q-field label="Target" helper="Self, All Allies, Other Allies, Enemy, All Enemies, Random Enemy">
-        <q-select v-model="model.target" :options="target.effect" />
+        <q-select v-model="model.target[0].value" :options="target.effect" />
       </q-field>
 
       <q-field label="Duration" helper="Minimum 1, or -1 for Indefinite">
         <q-input v-model="model.duration[0].value" />
+        <q-btn label="Condition" color="primary" @click="evaluate({model: 'duration'})" icon="save" />
+        <div v-for="(item, index) in model.duration" :key="'duration'+index">
+          <p>{{item}}</p>
+        </div>
       </q-field>
 
       <q-field label="During" helper="Effect take place during This Turn effect is applied or Next's Turn after effect is applied?">
@@ -55,22 +55,22 @@
       </q-field>
 
       <q-field label="Stack">
-        <q-toggle v-model="model.isStack" />
+        <q-toggle v-model="model.isStack[0].value" />
       </q-field>
       <q-field label="Invisible">
-        <q-toggle v-model="model.isInvisible" />
+        <q-toggle v-model="model.isInvisible[0].value" />
       </q-field>
       <q-field label="Multi">
-        <q-toggle v-model="model.isMulti" />
+        <q-toggle v-model="model.isMulti[0].value" />
       </q-field>
       <q-field label="Unremovable">
-        <q-toggle v-model="model.isUnremovable" />
+        <q-toggle v-model="model.isUnremovable[0].value" />
       </q-field>
       <q-field label="Harmful">
-        <q-toggle v-model="model.isHarmful" />
+        <q-toggle v-model="model.isHarmful[0].value" />
       </q-field>
       <q-field label="Piercing">
-        <q-toggle v-model="model.isPiercing" />
+        <q-toggle v-model="model.isPiercing[0].value" />
       </q-field>
 
       <q-card-separator class="q-my-md" />
@@ -84,6 +84,8 @@
       </q-field>
 
       <p v-for="(item, index) in afters" :key="index">{{item.name}}</p>
+
+      <evaluator ref="evaluator" v-on:send="register" />
     </q-card-main>
   </q-card>
 </template>
@@ -96,8 +98,13 @@ import classes from '../../definitions/classes'
 import during from '../../definitions/during'
 import scope from '../../definitions/scope'
 
+import evaluator from './evaluator'
+
 export default {
   name: 'BuilderEffects',
+  components: {
+    evaluator
+  },
   data() {
     return {
       types,
@@ -148,6 +155,13 @@ export default {
     }
   },
   methods: {
+    register: function(payload) {
+      console.log(payload)
+      this.model[payload.model].push(payload.pkg)
+    },
+    evaluate: function(pkg) {
+      this.$refs.evaluator.open(pkg)
+    },
     save: function() {},
     makeOptions: function(options) {
       return options.map(x => {
